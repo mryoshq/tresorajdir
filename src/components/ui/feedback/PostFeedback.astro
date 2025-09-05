@@ -13,8 +13,10 @@ interface Props {
 <div class="mt-12 flex items-center justify-center gap-x-2">
   <h3 class="text-neutral-700 dark:text-neutral-300">{title}</h3>
   <button
+    id="feedback-yes"
     type="button"
-    class="group inline-flex items-center gap-x-2 rounded-lg border border-neutral-400 px-3 py-2 text-sm font-medium text-neutral-700 hover:border-red-500 hover:bg-red-500 hover:shadow-2xl hover:shadow-red-500 dark:border-neutral-500 dark:text-neutral-300 dark:hover:bg-red-500 dark:hover:text-neutral-700 dark:hover:border-red-500 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600"
+    class="feedback-btn group inline-flex items-center gap-x-2 rounded-lg border border-neutral-400 px-3 py-2 text-sm font-medium text-neutral-700 hover:border-red-500 hover:bg-red-500 hover:shadow-2xl hover:shadow-red-500 dark:border-neutral-500 dark:text-neutral-300 dark:hover:bg-red-500 dark:hover:text-neutral-700 dark:hover:border-red-500 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600 transition-all duration-300"
+    data-feedback="yes"
   >
     <svg
       class="size-4 shrink-0 transition duration-300 group-hover:-translate-y-1 group-focus-visible:-translate-y-1"
@@ -33,8 +35,10 @@ interface Props {
     {firstChoice}
   </button>
   <button
+    id="feedback-no"
     type="button"
-    class="group inline-flex items-center gap-x-2 rounded-lg border border-neutral-400 px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-400/30 dark:border-neutral-500 dark:text-neutral-300 dark:hover:bg-neutral-700/60 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600"
+    class="feedback-btn group inline-flex items-center gap-x-2 rounded-lg border border-neutral-400 px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-400/30 dark:border-neutral-500 dark:text-neutral-300 dark:hover:bg-neutral-700/60 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600 transition-all duration-300"
+    data-feedback="no"
   >
     <svg
       class="size-4 shrink-0 transition duration-300 group-hover:translate-y-1 group-focus-visible:translate-y-1"
@@ -53,3 +57,56 @@ interface Props {
     {secondChoice}
   </button>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const yesBtn = document.getElementById('feedback-yes');
+    const noBtn = document.getElementById('feedback-no');
+    
+    if (yesBtn && noBtn) {
+      // Check if user has already given feedback
+      const savedFeedback = localStorage.getItem('post-feedback');
+      
+      if (savedFeedback) {
+        if (savedFeedback === 'yes') {
+          setActiveState(yesBtn, 'yes');
+        } else if (savedFeedback === 'no') {
+          setActiveState(noBtn, 'no');
+        }
+      }
+      
+      yesBtn.addEventListener('click', function() {
+        setActiveState(yesBtn, 'yes');
+        localStorage.setItem('post-feedback', 'yes');
+      });
+      
+      noBtn.addEventListener('click', function() {
+        setActiveState(noBtn, 'no');
+        localStorage.setItem('post-feedback', 'no');
+      });
+    }
+    
+    function setActiveState(activeBtn: HTMLElement, feedbackType: string) {
+      const yesBtn = document.getElementById('feedback-yes');
+      const noBtn = document.getElementById('feedback-no');
+      
+      // Reset both buttons to default state
+      if (yesBtn) resetButton(yesBtn);
+      if (noBtn) resetButton(noBtn);
+      
+      // Set active state for clicked button
+      if (feedbackType === 'yes') {
+        activeBtn.classList.add('bg-red-500', 'border-red-500', 'text-white', 'shadow-lg', 'shadow-red-500/50');
+        activeBtn.classList.remove('text-neutral-700', 'border-neutral-400', 'dark:text-neutral-300', 'dark:border-neutral-500');
+      } else if (feedbackType === 'no') {
+        activeBtn.classList.add('bg-neutral-500', 'border-neutral-500', 'text-white', 'shadow-lg', 'shadow-neutral-500/50');
+        activeBtn.classList.remove('text-neutral-700', 'border-neutral-400', 'dark:text-neutral-300', 'dark:border-neutral-500');
+      }
+    }
+    
+    function resetButton(btn: HTMLElement) {
+      btn.classList.remove('bg-red-500', 'border-red-500', 'bg-neutral-500', 'border-neutral-500', 'text-white', 'shadow-lg', 'shadow-red-500/50', 'shadow-neutral-500/50');
+      btn.classList.add('text-neutral-700', 'border-neutral-400', 'dark:text-neutral-300', 'dark:border-neutral-500');
+    }
+  });
+</script>

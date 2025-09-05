@@ -36,6 +36,11 @@ const socialPlatforms: SocialPlatform[] = [
     url: `https://www.linkedin.com/sharing/share-offsite/?url=${encoded_url}&title=${pageTitle}`,
     svg: "linkedIn",
   },
+  {
+    name: "WhatsApp",
+    url: `https://wa.me/?text=${encodeURIComponent(pageTitle + ' ' + encoded_url)}`,
+    svg: "whatsappFooter",
+  },
 ];
 ---
 

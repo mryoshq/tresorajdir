@@ -32,7 +32,7 @@ const footerLinks = [
 // An object of links for social icons
 const socialLinks = {
   facebook: "https://www.facebook.com/",
-  x: "https://twitter.com/",
+  whatsapp: "https://wa.me/",
   instagram: "https://instagram.com/",
   youtube: "https://youtube.com/",
 };

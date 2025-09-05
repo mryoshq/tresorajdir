@@ -1,6 +1,7 @@
 import { SITE } from "./constants";
 import applebasket from "@images/applebasket.jpg";
 import emblemlogo from "@images/emblemlogo.png";
+import orchard from "@images/orchard.jpg";
 
 export const aboutEnData = {
   pageLayout: {
@@ -41,7 +42,7 @@ export const aboutEnData = {
       sustainability: "100%",
       sustainabilityLabel: "Sustainable Practices"
     },
-    imageSrc: "/src/images/orchard.jpg",
+    imageSrc: orchard,
     imageAlt: "Trésor d'Ajdir Orchard"
   },
 

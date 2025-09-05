@@ -30,7 +30,7 @@ const footerLinks = [
 
 const socialLinks = {
   facebook: "#",
-  x: "#",
+  whatsapp: "#",
   instagram: "#",
   youtube: "#",
 };
