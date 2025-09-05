@@ -1,0 +1,61 @@
+---
+// AboutVisualIdentity component for the visual identity section
+interface ValueElement {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title: string;
+  subtitle: string;
+  logoStoryTitle: string;
+  logoStoryDescription: string;
+  valueElements: ValueElement[];
+  logoImageSrc: string;
+  logoImageAlt: string;
+}
+
+const { title, subtitle, logoStoryTitle, logoStoryDescription, valueElements, logoImageSrc, logoImageAlt } = Astro.props;
+---
+
+<section class="bg-neutral-50 dark:bg-neutral-900/10 py-16">
+  <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">
+        {title}
+      </h2>
+      <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+        {subtitle}
+      </p>
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="text-center">
+        <div class="mb-8">
+          <img 
+            src={logoImageSrc} 
+            alt={logoImageAlt} 
+            class="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 mx-auto object-contain"
+          />
+        </div>
+        <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200 mb-4">
+          {logoStoryTitle}
+        </h3>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-6 leading-relaxed">
+          {logoStoryDescription}
+        </p>
+      </div>
+      
+      <div class="space-y-8">
+        {valueElements.map((element) => (
+          <div>
+            <h4 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200 mb-3">{element.title}</h4>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              {element.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

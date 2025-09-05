@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import nnGray from "@images/nn-gray.png";
+import nnWhite from "@images/nn-white.png";
+
+// Get theme from props or default to 'light'
+const { theme = 'light', ...props } = Astro.props;
+---
+
+<div class="logo-container" {...props}>
+  <Image
+    src={nnGray}
+    alt="AJDIR Orchard Logo"
+    draggable="false"
+    loading="eager"
+    class="logo-light"
+    format="avif"
+  />
+  <Image
+    src={nnWhite}
+    alt="AJDIR Orchard Logo"
+    draggable="false"
+    loading="eager"
+    class="logo-dark"
+    format="avif"
+  />
+</div>
+<style>
+  .logo-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .logo-light {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .logo-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  :global(.dark) .logo-light {
+    opacity: 0;
+  }
+  
+  :global(.dark) .logo-dark {
+    opacity: 1;
+  }
+</style>
+

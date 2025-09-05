@@ -1,0 +1,211 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { SITE } from "@data/constants";
+
+const title = "Conditions Générales - Trésor d'Ajdir";
+const description = "Lisez les conditions générales d'utilisation du site web et des services de Trésor d'Ajdir. Découvrez nos politiques et vos droits.";
+---
+
+<MainLayout title={title} customDescription={description} lang="fr">
+  <div class="bg-white dark:bg-neutral-900">
+    <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-neutral-900 dark:text-white mb-4">
+          Conditions Générales
+        </h1>
+        <p class="text-lg text-neutral-600 dark:text-neutral-300">
+          Trésor d'Ajdir - Verger de Pommes Premium
+        </p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
+          Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
+      </div>
+
+      <!-- Content -->
+      <div class="prose prose-lg max-w-none dark:prose-invert">
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">1. Introduction</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Bienvenue chez Trésor d'Ajdir (« nous », « notre » ou « nos »). Ces Conditions Générales (« Conditions ») régissent votre utilisation de notre site web 
+            et de nos services. En accédant ou en utilisant notre site web, vous acceptez d'être lié par ces Conditions.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Trésor d'Ajdir est un verger de pommes premium situé dans les montagnes de l'Atlas au Maroc, dédié à la culture 
+            des plus fines pommes en utilisant des pratiques durables et la sagesse traditionnelle.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">2. Acceptation des Conditions</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            En accédant, naviguant ou utilisant notre site web, vous reconnaissez avoir lu, compris et accepté d'être lié par 
+            ces Conditions et notre Politique de Confidentialité. Si vous n'acceptez pas ces Conditions, veuillez ne pas utiliser notre site web.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Nous nous réservons le droit de modifier ces Conditions à tout moment. Les modifications prendront effet immédiatement après leur publication sur notre site web. 
+            Votre utilisation continue du site web après la publication des modifications constitue une acceptation des Conditions modifiées.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">3. Utilisation du Site Web</h2>
+          
+          <div class="mb-6">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">3.1 Utilisation Autorisée</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              Vous ne pouvez utiliser notre site web qu'à des fins légales. Vous acceptez d'utiliser le site web conformément à ces Conditions et 
+              à toutes les lois et réglementations applicables.
+            </p>
+            <p class="text-neutral-700 dark:text-neutral-300">
+              Vous pouvez parcourir notre contenu, découvrir nos variétés de pommes, nos pratiques de verger et nos initiatives de durabilité, 
+              et nous contacter pour des demandes commerciales.
+            </p>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">3.2 Utilisation Interdite</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              Vous acceptez de ne pas utiliser notre site web pour l'une des fins suivantes :
+            </p>
+            <ul class="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-1">
+              <li>Toute fin illégale ou pour inciter d'autres à accomplir des actes illégaux</li>
+              <li>Pour violer toute réglementation, règle, loi ou ordonnance locale internationale, fédérale, provinciale ou étatique</li>
+              <li>Pour porter atteinte ou violer nos droits de propriété intellectuelle ou les droits de propriété intellectuelle d'autrui</li>
+              <li>Pour harceler, abuser, insulter, nuire, diffamer, calomnier, dénigrer, intimider ou discriminer</li>
+              <li>Pour soumettre des informations fausses ou trompeuses</li>
+              <li>Pour télécharger ou transmettre des virus ou tout autre type de code malveillant</li>
+              <li>Pour spammer, phisher, pharmer, prétexter, spider, crawler ou scraper</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">4. Droits de Propriété Intellectuelle</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Le contenu de notre site web, y compris mais sans s'y limiter, le texte, les graphiques, les logos, les images, les clips audio, la vidéo, 
+            et les logiciels, est la propriété de Trésor d'Ajdir et est protégé par les lois sur le droit d'auteur, les marques de commerce et autres lois sur la propriété intellectuelle.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Vous ne pouvez pas reproduire, distribuer, modifier, créer des œuvres dérivées, afficher publiquement, exécuter publiquement, republier, 
+            télécharger, stocker ou transmettre l'un de nos matériaux sans notre consentement écrit préalable.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Le nom "Trésor d'Ajdir", le logo et tous les noms connexes, logos, noms de produits et services, designs et slogans 
+            sont des marques de commerce de Trésor d'Ajdir. Vous ne pouvez pas utiliser ces marques sans notre permission écrite préalable.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">5. Contenu Utilisateur</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Si vous soumettez du contenu à notre site web (comme des commentaires, des avis ou des commentaires), vous nous accordez une licence non exclusive, 
+            libre de redevances, perpétuelle et mondiale pour utiliser, reproduire, modifier, adapter, publier, traduire, créer des œuvres dérivées, 
+            distribuer et afficher ce contenu.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Vous déclarez et garantissez que vous possédez ou avez les droits nécessaires pour soumettre ce contenu et qu'il ne 
+            viole aucun droit de tiers ou lois applicables.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">6. Politique de Confidentialité</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Votre vie privée est importante pour nous. Notre Politique de Confidentialité explique comment nous collectons, utilisons et protégeons vos informations 
+            lorsque vous utilisez notre site web. En utilisant notre site web, vous acceptez la collecte et l'utilisation d'informations conformément 
+            à notre Politique de Confidentialité.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Nous nous engageons à protéger vos informations personnelles et à maintenir la confidentialité de toutes les données que vous nous fournissez.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">7. Avertissements et Limitations de Responsabilité</h2>
+          
+          <div class="mb-6">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">7.1 Contenu du Site Web</h3>
+            <p class="text-neutral-700 dark:text-neutral-300">
+              Les informations sur notre site web sont fournies "en l'état". Bien que nous nous efforcions de fournir des informations précises et à jour 
+              sur nos variétés de pommes, nos pratiques de verger et nos services, nous ne donnons aucune garantie ou représentation 
+              concernant l'exactitude, l'exhaustivité ou la fiabilité de tout contenu.
+            </p>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">7.2 Limitation de Responsabilité</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              Dans la mesure maximale permise par la loi, Trésor d'Ajdir ne sera pas responsable de tout dommage direct, indirect, accessoire, 
+              spécial, consécutif ou punitif, y compris mais sans s'y limiter :
+            </p>
+            <ul class="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-1">
+              <li>Perte de profits, de données ou d'autres pertes intangibles</li>
+              <li>Dommages résultant de votre utilisation ou de votre incapacité à utiliser notre site web</li>
+              <li>Accès non autorisé ou altération de vos données</li>
+              <li>Toute autre question relative à notre site web</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">8. Indemnisation</h2>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Vous acceptez de défendre, indemniser et dégager Trésor d'Ajdir et ses dirigeants, administrateurs, employés et agents 
+            de toute réclamation, dommage, obligation, perte, responsabilité, coût ou dette, et dépenses (y compris les honoraires d'avocat) 
+            découlant de votre utilisation de notre site web ou de la violation de ces Conditions.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">9. Résiliation</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Nous pouvons résilier ou suspendre votre accès à notre site web immédiatement, sans préavis ni responsabilité, pour quelque raison que ce soit, 
+            y compris sans limitation si vous violez ces Conditions.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Lors de la résiliation, votre droit d'utiliser le site web cessera immédiatement. Toutes les dispositions de ces Conditions qui par leur nature 
+            devraient survivre à la résiliation survivront à la résiliation.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">10. Loi Applicable</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Ces Conditions seront interprétées et régies par les lois du Maroc, sans égard à ses dispositions de conflit de lois. 
+            Tout différend découlant de ces Conditions ou de votre utilisation de notre site web sera soumis à la juridiction exclusive des tribunaux du Maroc.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Si une disposition de ces Conditions est jugée invalide ou inapplicable, les dispositions restantes resteront en vigueur.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">11. Informations de Contact</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Si vous avez des questions concernant ces Conditions Générales, veuillez nous contacter :
+          </p>
+          <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              <strong>Trésor d'Ajdir</strong><br>
+              Verger de Pommes Premium<br>
+              Montagnes de l'Atlas, Maroc
+            </p>
+            <p class="text-neutral-700 dark:text-neutral-300">
+              Email : info@tresordajdir.com<br>
+              Téléphone : +212 XXX XXX XXX
+            </p>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">12. Modifications des Conditions</h2>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Nous nous réservons le droit de modifier ou de remplacer ces Conditions à tout moment. Si une révision est importante, nous essaierons de fournir 
+            au moins 30 jours d'avis avant que toute nouvelle condition prenne effet. Ce qui constitue un changement important sera déterminé à notre seule discrétion.
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+</MainLayout>

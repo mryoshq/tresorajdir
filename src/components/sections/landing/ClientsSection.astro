@@ -1,0 +1,63 @@
+---
+const { partners } = Astro.props;
+
+interface Partner {
+  icon: any;
+  name?: string;
+  href?: string;
+}
+
+const marqueeElements = partners.length;
+
+// increase the repeat count if your icons are narrow
+const repeatedPartners = Array(3).fill(partners).flat();
+---
+
+<section
+  class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full border-y-4 border-green-700/20 dark:border-green-200/40 overflow-x-hidden"
+>
+
+  <div
+    class="marquee"
+    style={`--marquee-elements:${marqueeElements};
+            --marquee-element-width-responsive:calc(7.5rem / var(--marquee-elements) * 5);
+            --marquee-element-width:calc(11.25rem / var(--marquee-elements) * 5);
+            --marquee-duration:20s;
+            --marquee-reverse:;
+            --marquee-width:100%;`}
+  >
+    <div class="marquee-content flex items-center">
+      {repeatedPartners.map((partner: Partner, index) => (
+        <div
+          class="min-w-[var(--marquee-element-width-responsive)] px-0 md:min-w-[var(--marquee-element-width)] md:px-4"
+          aria-hidden={index >= partners.length}
+        >
+          <a href={partner.href} target="_blank" rel="noopener noreferrer">
+            <div class="px-4" set:html={partner.icon} />
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee {
+    width: var(--marquee-width);
+    margin-inline: auto;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  .marquee-content {
+    animation: marquee var(--marquee-duration) linear infinite;
+    overflow-x: hidden;
+  }
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>

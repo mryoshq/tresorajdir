@@ -1,0 +1,83 @@
+---
+// Import the necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import HeroSection from "@components/sections/landing/HeroSection.astro";
+import HeroSectionAlt from "@components/sections/landing/HeroSectionAlt.astro";
+import PeekCarousel from "@components/sections/landing/PeekCarousel.astro";
+import ClientsSection from "@components/sections/landing/ClientsSection.astro";
+import FeaturesGeneral from "@components/sections/features/FeaturesGeneral.astro";
+import TestimonialsSection from "@components/sections/testimonials/TestimonialsSection.astro";
+import FAQ from "@components/sections/misc/FAQ.astro";
+import MissionSection from "@components/sections/misc/MissionSection.astro";
+import faqs from "@data/faqs.json";
+import features from "@data/features.json";
+
+import { partnersData } from "@/data_files/constants";
+import heroApple from '@images/tresor-hero.png'
+
+import slide1 from "@images/slide2.jpg"
+import slide2 from "@images/slide3.jpg"
+import slide3 from "@images/slide5.jpg"
+import slide4 from "@images/slide6.jpg"
+import slide5 from "@images/slide7.jpg"
+import slide6 from "@images/slide1.jpg"
+---
+
+<MainLayout lang="en">
+
+  <HeroSection
+    title=`The Finest   <span
+        class="text-red-500 dark:text-red-700">Apples</span> from <span
+        class="text-green-500 dark:text-green-700">AJDIR</span> Orchard` 
+    subTitle="A taste of the finest apples from the Moroccan Atlas Mountains"
+    primaryBtn="Explore Our Apples"
+    primaryBtnURL="/en/sustainability"
+    secondaryBtn="Contact Our Farm"
+    secondaryBtnURL="/en/contact"
+    src={heroApple}
+    alt="Fresh apples from AJDIR orchard in beautiful packaging"
+  />
+
+  <ClientsSection
+    partners={partnersData}
+  />
+  <!-- mission and vision -->
+  <MissionSection
+    title="AJDIR TREASURES"
+    mission="From 2017, we have been dedicated to cultivating the finest apples in the Moroccan Atlas Mountains, combining traditional farming wisdom with sustainable practices. Our mission is to deliver exceptional quality apples that not only satisfy the palate but also respect the environment and support local communities. We believe in creating a bridge between nature's bounty and your table, ensuring every apple tells a story of care, quality, and commitment to excellence."
+  />
+
+  <PeekCarousel 
+  images={[slide1, slide2, slide3, slide4, slide5, slide6]} 
+  title="Apples of distinction, living art"
+  />   
+  <TestimonialsSection
+    title="Fresh from Our Orchard to Your Table"
+    subTitle="Experience the taste of nature redefined."
+    ;
+    testimonials={[
+      {
+        content:
+          "AJDIR apples are absolutely delicious! The freshness and quality are unmatched. Our customers love them, and the delivery service is incredibly reliable. Truly the best apples we've ever served!",
+       },
+    ]}
+   
+  />
+  
+  <FeaturesGeneral
+    title="Meeting Market Demands"
+    subTitle="At AJDIR Orchard, we tackle the unique challenges of sustainable apple farming. From organic cultivation to expert harvesting, we're dedicated to providing the freshest, highest-quality apples for your table."
+    imageTitle="Apples Crafted to PERFECTION"
+    features={features}
+  />
+  
+  <FAQ title="Frequently<br />asked questions" faqs={faqs} />
+
+  <HeroSectionAlt
+    title="Taste the Difference"
+    subTitle="AJDIR Orchard is a family-owned farm, meticulously cultivating the finest apples using sustainable practices and traditional wisdom."
+    url="#"
+  />
+
+  
+</MainLayout>

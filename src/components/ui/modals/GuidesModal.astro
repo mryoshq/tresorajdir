@@ -1,0 +1,158 @@
+---
+// Define props from Astro
+const { isOpen, lang = "en" } = Astro.props;
+
+// Define TypeScript interface for props
+interface Props {
+  isOpen?: boolean;
+  lang?: string;
+}
+
+// Language-specific content
+const content = {
+  en: {
+    title: "Guides & Articles",
+    orchard: "Orchard Management",
+    sustainability: "Sustainability Practices",
+    blog: "Blog & Insights",
+    close: "Close"
+  },
+  fr: {
+    title: "Guides et Articles",
+    orchard: "Gestion du Verger",
+    sustainability: "Pratiques Durables",
+    blog: "Blog et Aperçus",
+    close: "Fermer"
+  }
+};
+
+const currentContent = content[lang as keyof typeof content] || content.en;
+---
+
+<!-- Modal Backdrop -->
+<div 
+  id="guides-modal" 
+  class="fixed inset-0 z-50 hidden items-center justify-center backdrop-blur-sm bg-white/10 dark:bg-neutral-900/20 p-4"
+  data-modal-backdrop
+>
+  <!-- Modal Content -->
+  <div class="relative w-full max-w-md transform rounded-xl bg-white/95 dark:bg-neutral-800/95 backdrop-blur-md p-6 text-center shadow-2xl transition-all duration-300 border border-neutral-200/50 dark:border-neutral-700/50 scale-95 opacity-0" data-modal-content>
+    <!-- Close Button -->
+    <button
+      type="button"
+      class="absolute right-2.5 top-3 ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100/80 dark:bg-neutral-700/80 backdrop-blur-sm text-sm text-neutral-500 hover:bg-neutral-200/90 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-600/90 dark:hover:text-neutral-200 transition-colors"
+      data-modal-close
+    >
+      <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>
+      <span class="sr-only">{currentContent.close}</span>
+    </button>
+
+    <!-- Modal Header -->
+    <div class="mb-5">
+      <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100">
+        {currentContent.title}
+      </h3>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="space-y-3">
+      <a
+        href={lang === "fr" ? "/orchard" : "/en/orchard"}
+        class="block w-full rounded-lg bg-neutral-100 dark:bg-transparent backdrop-blur-sm px-4 py-3 text-center text-sm font-medium text-neutral-700 dark:text-white border-2 border-green-500/50 dark:border-green-400/50 hover:bg-green-500 hover:text-white dark:hover:bg-green-500/20 focus:outline-none focus:ring-2 focus:ring-green-300 dark:focus:ring-green-400 transition-all duration-200 shadow-lg hover:shadow-xl"
+      >
+        {currentContent.orchard}
+      </a>
+      
+      <a
+        href={lang === "fr" ? "/sustainability" : "/en/sustainability"}
+        class="block w-full rounded-lg bg-neutral-100 dark:bg-transparent backdrop-blur-sm px-4 py-3 text-center text-sm font-medium text-neutral-700 dark:text-white border-2 border-green-500/50 dark:border-green-400/50 hover:bg-green-500 hover:text-white dark:hover:bg-green-500/20 focus:outline-none focus:ring-2 focus:ring-green-300 dark:focus:ring-green-400 transition-all duration-200 shadow-lg hover:shadow-xl"
+      >
+        {currentContent.sustainability}
+      </a>
+      
+      <a
+        href={lang === "fr" ? "/blog" : "/en/blog"}
+        class="block w-full rounded-lg bg-neutral-100 dark:bg-transparent backdrop-blur-sm px-4 py-3 text-center text-sm font-medium text-neutral-700 dark:text-white border-2 border-green-500/50 dark:border-green-400/50 hover:bg-green-500 hover:text-white dark:hover:bg-green-500/20 focus:outline-none focus:ring-2 focus:ring-green-300 dark:focus:ring-green-400 transition-all duration-200 shadow-lg hover:shadow-xl"
+      >
+        {currentContent.blog}
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal functionality
+  function initModal() {
+    const modal = document.getElementById('guides-modal');
+    const modalBackdrop = document.querySelector('[data-modal-backdrop]');
+    const closeButtons = document.querySelectorAll('[data-modal-close]');
+
+    function openModal() {
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        
+        // Animate modal content in
+        const modalContent = modal.querySelector('[data-modal-content]');
+        if (modalContent) {
+          setTimeout(() => {
+            modalContent.classList.remove('scale-95', 'opacity-0');
+            modalContent.classList.add('scale-100', 'opacity-100');
+          }, 10);
+        }
+      }
+    }
+
+    function closeModal() {
+      if (modal) {
+        // Animate modal content out
+        const modalContent = modal.querySelector('[data-modal-content]');
+        if (modalContent) {
+          modalContent.classList.remove('scale-100', 'opacity-100');
+          modalContent.classList.add('scale-95', 'opacity-0');
+        }
+        
+        // Hide modal after animation
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+          document.body.style.overflow = 'auto';
+        }, 200);
+      }
+    }
+
+    // Close modal when clicking on backdrop
+    if (modalBackdrop) {
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) {
+          closeModal();
+        }
+      });
+    }
+
+    // Close modal when clicking close buttons
+    closeButtons.forEach(button => {
+      button.addEventListener('click', closeModal);
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Make openModal available globally
+    (window as any).openGuidesModal = openModal;
+  }
+
+  // Initialize modal when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initModal);
+  } else {
+    initModal();
+  }
+</script>

@@ -1,0 +1,39 @@
+---
+const { url, name } = Astro.props;
+
+interface Props {
+  url: string;
+  name: string;
+}
+---
+
+<a
+  id={url === "/" ? "home" : url.replace("/", "")}
+  href={url}
+  data-astro-prefetch
+  class="nav-link rounded-lg text-base font-medium text-neutral-600 outline-hidden ring-zinc-500 hover:text-red-500 focus-visible:ring-3 dark:text-neutral-100 dark:ring-zinc-200 dark:hover:text-red-700 dark:focus:outline-hidden md:py-3 md:text-sm 2xl:text-base transition-all duration-200 relative"
+>
+  {name}
+  <!-- Custom underline that matches text styling -->
+  <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-current transition-all duration-200 opacity-0"></span>
+</a>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let url = window.location.pathname;
+    let navId = url === "/" ? "home" : url.replace("/", "");
+    let nav = document.getElementById(navId);
+
+    if (nav) {
+      // Add custom underline that matches text styling
+      const underline = nav.querySelector('span');
+      if (underline) {
+        underline.classList.add(
+          "w-full",           // Full width underline
+          "opacity-100"       // Make underline visible
+        );
+      }
+      nav.setAttribute("aria-current", "page");
+    }
+  });
+</script>

@@ -1,0 +1,164 @@
+---
+// Import PrimaryCTA component
+import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
+
+// Destructure the props passed to the Astro component
+const { title, subTitle, btnExists, btnTitle, btnURL, backgroundImage } = Astro.props;
+// Define TypeScript interface for props
+interface Props {
+  title: string;
+  subTitle: string;
+  btnExists?: boolean;
+  btnTitle?: string;
+  btnURL?: string;
+  backgroundImage?: any;
+}
+---
+
+<!-- Root section of the component -->
+<section
+  class={`${backgroundImage ? 'mt-0 -mx-4 sm:-mx-6 lg:-mx-8' : 'mt-10'} py-10 sm:py-16 lg:py-14 relative`}
+  style={backgroundImage ? `background-image: url(${backgroundImage.src || backgroundImage}); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100vw; margin-left: calc(-50vw + 50%);` : ''}
+  id="main-section"
+>
+  {backgroundImage && (
+    <div class="absolute inset-0 bg-black/75 z-0" id="main-section-overlay"></div>
+  )}
+  <div class={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${backgroundImage ? 'relative z-10' : ''}`} id="main-section-content">
+    <!-- Section title -->
+    <h1
+      class={`mb-4 text-balance text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-center ${backgroundImage ? 'text-white' : 'text-neutral-800 dark:text-neutral-200'}`}
+      id="main-section-title"
+    >
+      {title}
+    </h1>
+    
+
+
+
+    
+    <!-- Section subtitle -->
+    <p
+      class={`mb-8 max-w-prose text-pretty font-normal sm:text-xl text-center mx-auto ${backgroundImage ? 'text-white' : 'text-neutral-600 dark:text-neutral-400'}`}
+      id="main-section-subtitle"
+    >
+      {subTitle}
+    </p>
+    <!-- Conditional rendering of PrimaryCTA component if 'btnExists' property is truthy -->
+    {
+      btnExists ? (
+        <div class="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0" id="main-section-button">
+          <PrimaryCTA title={btnTitle} url={btnURL} />
+        </div>
+      ) : null
+    }
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Function to initialize the main section animations
+  function initMainSectionAnimations() {
+    console.log('MainSection script loaded');
+    
+    const section = document.getElementById('main-section');
+    const overlay = document.getElementById('main-section-overlay');
+    const title = document.getElementById('main-section-title');
+    const subtitle = document.getElementById('main-section-subtitle');
+    const button = document.getElementById('main-section-button');
+    
+    if (!section) {
+      console.log('MainSection not found or no background image');
+      return;
+    }
+    
+    // Set initial states
+    if (overlay) {
+      gsap.set(overlay, { opacity: 0 });
+    }
+    
+    if (title) {
+      gsap.set(title, { opacity: 0.05 });
+    }
+    
+    if (subtitle) {
+      gsap.set(subtitle, { opacity: 0.05 });
+    }
+    
+    if (button) {
+      gsap.set(button, { opacity: 0.05 });
+    }
+    
+    // Create timeline for the animations
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none reverse"
+      }
+    });
+    
+    // Animate overlay and text elements
+    if (overlay) {
+      tl.to(overlay, {
+        opacity: 0.75,
+        duration: 1,
+        ease: "power2.out"
+      }, 0);
+    }
+    
+    if (title) {
+      tl.to(title, {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      }, 0);
+    }
+    
+    if (subtitle) {
+      tl.to(subtitle, {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      }, 0);
+    }
+    
+    if (button) {
+      tl.to(button, {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      }, 0);
+    }
+    
+    console.log('MainSection animation timeline created');
+    
+    return tl;
+  }
+  
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMainSectionAnimations);
+  } else {
+    initMainSectionAnimations();
+  }
+  
+  // Cleanup function for Astro
+  document.addEventListener('astro:page-load', () => {
+    // Kill any existing ScrollTriggers
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    // Initialize new animations
+    initMainSectionAnimations();
+  });
+  
+  document.addEventListener('astro:before-swap', () => {
+    // Cleanup before page swap
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  });
+</script>

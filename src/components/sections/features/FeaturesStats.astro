@@ -1,0 +1,231 @@
+---
+// Import the necessary components
+import StatsBig from "@components/ui/blocks/StatsBig.astro";
+import StatsSmall from "@components/ui/blocks/StatsSmall.astro";
+
+const { title, subTitle, stats, mainStatTitle, mainStatSubTitle } = Astro.props;
+
+interface Props {
+  title: string;
+  subTitle?: string;
+  mainStatTitle: string;
+  mainStatSubTitle: string;
+  stats?: Stat[];
+}
+
+// TypeScript type for the statistics
+type Stat = {
+  stat: string;
+  description: string;
+};
+---
+
+<section
+  class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full border-b-1 border-goldenbrown-400"
+  id="stats-section"
+>
+  <div class="max-w-(--breakpoint-md)">
+    <!-- Main title -->
+    <h2
+      class="mb-4 text-balance text-3xl font-extrabold tracking-tight text-neutral-800 dark:text-neutral-200"
+    >
+      {title}
+    </h2>
+    <!-- Subtitle -->
+    {subTitle &&
+    <p
+      class="mb-16 max-w-prose text-pretty font-normal text-neutral-600 dark:text-neutral-400 sm:text-xl"
+    >
+      {subTitle}
+    </p>
+    }
+  </div>
+  <!-- Grid container for statistics -->
+  <div class="grid items-center gap-6 lg:grid-cols-12 lg:gap-12">
+    <!-- First grid item, showing a big statistics -->
+    <div class="lg:col-span-4">
+      <StatsBig
+        title={mainStatTitle}
+        subTitle={mainStatSubTitle}
+        id="main-stat"
+      />
+    </div>
+    <!-- Second grid item, showing multiple small statistics -->
+    {stats &&
+    <div
+      class="relative lg:col-span-8 lg:before:absolute lg:before:-start-12 lg:before:top-0 lg:before:h-full lg:before:w-px lg:before:bg-neutral-300 lg:dark:before:bg-neutral-700"
+    >
+      <div
+        class="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4 lg:grid-cols-3"
+      >
+        <!-- Iterate over the 'stats' array and create a 'StatsSmall' component for each object in the array -->
+        {
+          stats.map((stat, index) => (
+            <StatsSmall 
+              title={stat.stat} 
+              subTitle={stat.description} 
+              id={`stat-${index}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Function to extract numeric value from stat string
+  function extractNumber(statString: string): number {
+    // Remove any non-numeric characters except decimal points and commas
+    const cleanString = statString.replace(/[^\d.,]/g, '');
+    // Convert to number, handling commas
+    return parseFloat(cleanString.replace(/,/g, ''));
+  }
+  
+  // Function to format number back to original format
+  function formatNumber(number: number, originalString: string, isMainStat = false): string {
+    if (originalString.includes('%')) {
+      // For main stat (big), show only integer part
+      if (isMainStat) {
+        return Math.floor(number) + '%';
+      } else {
+        // For small stats, show decimal during animation, then original format
+        return number.toFixed(1) + '%';
+      }
+    } else if (originalString.includes('+')) {
+      return Math.floor(number).toLocaleString() + '+';
+    } else if (originalString.includes(',')) {
+      return Math.floor(number).toLocaleString();
+    } else {
+      return Math.floor(number).toString();
+    }
+  }
+  
+  // Function to initialize the stats animations
+  function initStatsAnimations() {
+    console.log('FeaturesStats script loaded');
+    
+    const statsSection = document.getElementById('stats-section');
+    const mainStat = document.getElementById('main-stat');
+    
+    if (!statsSection) {
+      console.error('Stats section not found');
+      return;
+    }
+    
+    // Get all stat elements
+    const statElements = document.querySelectorAll('[id^="stat-"]');
+    const allStats = [mainStat, ...statElements];
+    
+    console.log('Found stats elements:', allStats.length);
+    
+    // Create timeline for stats animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: statsSection,
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none reverse"
+      }
+    });
+    
+    // Animate each stat
+    allStats.forEach((statElement, index) => {
+      if (!statElement) return;
+      
+      const titleElement = statElement.querySelector('p:first-child');
+      
+      if (titleElement && titleElement.textContent) {
+        const originalText = titleElement.textContent;
+        const targetNumber = extractNumber(originalText);
+        const isMainStat = index === 0; // First stat is the main stat
+        
+        if (!isNaN(targetNumber)) {
+          // Remove symbols from original text to avoid double symbols during animation
+          const cleanOriginalText = originalText.replace(/[%+]/g, '');
+          
+          // Set initial value to 0
+          titleElement.textContent = '0';
+          
+          // Add to timeline with stagger
+          tl.to(titleElement, {
+            duration: 2.5, // Increased duration for slower animation
+            ease: "power2.out",
+            onUpdate: function() {
+              const progress = this.progress();
+              const currentNumber = targetNumber * progress;
+              
+              if (originalText.includes('%')) {
+                // Handle percentage formatting
+                if (isMainStat) {
+                  // Main stat: show only integer part
+                  titleElement.textContent = Math.floor(currentNumber) + '%';
+                } else {
+                  // Small stats: show decimal during animation
+                  titleElement.textContent = currentNumber.toFixed(1) + '%';
+                }
+              } else if (originalText.includes('+')) {
+                // Handle numbers with plus symbol
+                titleElement.textContent = Math.floor(currentNumber).toLocaleString() + '+';
+              } else if (originalText.includes(',')) {
+                // Handle numbers with commas
+                titleElement.textContent = Math.floor(currentNumber).toLocaleString();
+              } else {
+                // Handle plain numbers
+                titleElement.textContent = Math.floor(currentNumber).toString();
+              }
+            },
+            onComplete: function() {
+              // Format final number correctly without double symbols
+              const finalNumber = targetNumber;
+              if (originalText.includes('%')) {
+                if (isMainStat) {
+                  titleElement.textContent = Math.floor(finalNumber) + '%';
+                } else {
+                  titleElement.textContent = finalNumber.toFixed(1) + '%';
+                }
+              } else if (originalText.includes('+')) {
+                titleElement.textContent = Math.floor(finalNumber).toLocaleString() + '+';
+              } else if (originalText.includes(',')) {
+                titleElement.textContent = Math.floor(finalNumber).toLocaleString();
+              } else {
+                titleElement.textContent = Math.floor(finalNumber).toString();
+              }
+            }
+          }, index * 0.2); // Increased stagger to 0.2 seconds
+        }
+      }
+    });
+    
+    console.log('Stats counter animation timeline created');
+    
+    return tl;
+  }
+  
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStatsAnimations);
+  } else {
+    initStatsAnimations();
+  }
+  
+  // Cleanup function for Astro
+  document.addEventListener('astro:page-load', () => {
+    // Kill any existing ScrollTriggers
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    // Initialize new animations
+    initStatsAnimations();
+  });
+  
+  document.addEventListener('astro:before-swap', () => {
+    // Cleanup before page swap
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  });
+</script>

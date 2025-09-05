@@ -1,0 +1,163 @@
+---
+// Import all required components and utilities
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
+
+const { blogEntry, recentBlogLocale = "" } = Astro.props;
+
+interface Props {
+  blogEntry: CollectionEntry<"blog">;
+  recentBlogLocale?: string;
+}
+
+// Split the description text into words and punctuation groups for animation
+const titleText = blogEntry.data.description;
+
+// Function to split text into characters with simple punctuation grouping
+function splitTextIntelligently(text: string) {
+  const result: Array<{ char: string; index: number; groupWithPrevious: boolean }> = [];
+  
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    
+    // Check if this character should be grouped with the previous one
+    const isPunctuation = /[.,]/.test(char);
+    
+    result.push({
+      char: char === ' ' ? '\u00A0' : char, // Replace spaces with non-breaking spaces
+      index: i,
+      groupWithPrevious: isPunctuation
+    });
+  }
+  
+  return result;
+}
+
+const characters = splitTextIntelligently(titleText);
+---
+
+<!-- Root container, which is divided into 2 grid column layout for larger screens -->
+<div class="card-blog-recent grid gap-8 sm:grid-cols-2 sm:items-center text-center">
+  <!-- Container for the blog post's cover image -->
+  <div class="sm:order-2">
+    <div class="relative rounded-lg pt-[50%] sm:pt-[100%]">
+      <Image
+        class="absolute start-0 top-0 size-full rounded-xl object-cover"
+        src={blogEntry.data.cardImage}
+        alt={blogEntry.data.cardImageAlt}
+        draggable={"false"}
+        loading={"eager"}
+        format={"avif"}
+      />
+    </div>
+  </div>
+  <!-- Container for the blog post's heading, author avatar, author's role, and read more button -->
+  <div class="sm:order-1">
+    <!-- Blog title which is also a hyperlink to the blog detail page  -->
+    <h2
+      class="text-balance text-2xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 md:text-3xl lg:text-4xl lg:leading-tight xl:text-5xl xl:leading-tight"
+    >
+      <a
+        class="outline-hidden ring-zinc-500 transition duration-300 hover:text-red-500 focus-visible:ring-3 dark:text-neutral-300 dark:ring-zinc-200 dark:hover:text-neutral-50 dark:focus:outline-hidden"
+        href={recentBlogLocale && recentBlogLocale !== "en" ? `/${recentBlogLocale}/blog/${blogEntry.id.replace(/^fr\//, '')}/` : `/blog/${blogEntry.id.replace(/^en\//, '')}/`}
+      >
+        <span class="animated-title">
+          {characters.map(({ char, index, groupWithPrevious }: { char: string; index: number; groupWithPrevious: boolean }) => (
+            <span class="title-char" data-index={index} data-group={groupWithPrevious}>{char}</span>
+          ))}
+        </span>
+      </a>
+    </h2>
+
+    <!-- Read More button which is a link to the blog post detailed page -->
+    <div class="mt-5 flex justify-center">
+      <PrimaryCTA
+        url={recentBlogLocale && recentBlogLocale !== "en" ? `/${recentBlogLocale}/blog/${blogEntry.id.replace(/^fr\//, '')}/` : `/blog/${blogEntry.id.replace(/^en\//, '')}/`}
+        title="Read More"
+        data-astro-prefetch
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .title-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for the component to be mounted
+  document.addEventListener('DOMContentLoaded', () => {
+    const titleChars = document.querySelectorAll('.title-char');
+    const cardContainer = document.querySelector('.card-blog-recent');
+    
+    if (titleChars.length > 0 && cardContainer) {
+      // Create a timeline for the character animation
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "power2.out",
+          duration: 0.03 // Faster duration
+        },
+        scrollTrigger: {
+          trigger: cardContainer,
+          start: "top 80%", // Start animation when top of element is 80% from top of viewport
+          end: "bottom 20%",
+          toggleActions: "play none none reverse", // Play on enter, reverse on leave
+          once: true // Only play once
+        }
+      });
+
+      // Animate each character sequentially with faster timing
+      // Group punctuation with previous character
+      let currentDelay = 0;
+      titleChars.forEach((char, index) => {
+        const shouldGroupWithPrevious = char.getAttribute('data-group') === 'true';
+        
+        // If this character should be grouped with the previous, use the same delay
+        const delay = shouldGroupWithPrevious ? currentDelay : currentDelay;
+        
+        tl.to(char, {
+          opacity: 1,
+          y: 0,
+          delay: delay
+        }, delay);
+        
+        // Only increment delay if this character is not grouped with the previous
+        if (!shouldGroupWithPrevious) {
+          currentDelay += 0.015;
+        }
+      });
+
+      // Optional: Add a subtle hover effect
+      const titleLink = document.querySelector('.animated-title');
+      if (titleLink) {
+        titleLink.addEventListener('mouseenter', () => {
+          gsap.to(titleChars, {
+            scale: 1.05,
+            duration: 0.2,
+            stagger: 0.01
+          });
+        });
+
+        titleLink.addEventListener('mouseleave', () => {
+          gsap.to(titleChars, {
+            scale: 1,
+            duration: 0.2,
+            stagger: 0.01
+          });
+        });
+      }
+    }
+  });
+</script>

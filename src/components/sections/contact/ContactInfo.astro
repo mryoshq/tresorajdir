@@ -1,0 +1,46 @@
+---
+// ContactInfo component for the contact information section
+import ContactIconBlock from "@components/ui/blocks/ContactIconBlock.astro";
+import Icon from "@components/ui/icons/Icon.astro";
+
+interface ContactBlock {
+  heading: string;
+  content: string;
+  isLinkVisible?: boolean;
+  linkTitle?: string;
+  linkURL?: string;
+  isModalTrigger?: boolean;
+  modalType?: string;
+  isArrowVisible?: boolean;
+  isAddressVisible?: boolean;
+  addressContent?: string;
+  lang: string;
+  iconName: string;
+}
+
+interface Props {
+  contactBlocks: ContactBlock[];
+}
+
+const { contactBlocks } = Astro.props;
+---
+
+<div class="divide-y divide-neutral-300 dark:divide-neutral-700">
+  {contactBlocks.map((block) => (
+    <ContactIconBlock
+      heading={block.heading}
+      content={block.content}
+      isLinkVisible={block.isLinkVisible}
+      linkTitle={block.linkTitle}
+      linkURL={block.linkURL}
+      isModalTrigger={block.isModalTrigger}
+      modalType={block.modalType}
+      isArrowVisible={block.isArrowVisible}
+      isAddressVisible={block.isAddressVisible}
+      addressContent={block.addressContent}
+      lang={block.lang}
+    >
+      <Icon name={block.iconName} />
+    </ContactIconBlock>
+  ))}
+</div>

@@ -1,0 +1,87 @@
+---
+// Import the necessary dependencies
+import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
+import orchardImage from "@images/orchard.jpg";
+
+// Define props from Astro
+const { title, subTitle, url } = Astro.props;
+
+const btnTitle = Astro.currentLocale === "fr" ? "Passer une commande" : "Order now";
+
+// Define TypeScript interface for props
+interface Props {
+  title: string;
+  subTitle?: string;
+  url?: string;
+}
+---
+
+<section
+  class="relative w-screen -mx-[calc(50vw-50%)] bg-cover bg-center bg-no-repeat"
+  style={`background-image: url(${orchardImage.src})`}
+>
+  <!-- Decorating SVG elements -->
+
+  <!-- Apple Icon (red, rotated) -->
+  <div
+    class="absolute left-0 top-[55%] scale-90 rotate-12 md:top-[20%] xl:left-[10%] xl:top-[25%] z-10"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-red-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-apple">
+      <path d="M12 6.528V3a1 1 0 0 1 1-1h0"/>
+      <path d="M18.237 21A15 15 0 0 0 22 11a6 6 0 0 0-10-4.472A6 6 0 0 0 2 11a15.1 15.1 0 0 0 3.763 10 3 3 0 0 0 3.648.648 5.5 5.5 0 0 1 5.178 0A3 3 0 0 0 18.237 21"/>
+    </svg>
+  </div>
+
+  <!-- Trees Icon (green, rotated) -->
+  <div class="absolute left-[85%] top-0 scale-75 -rotate-6 z-10">
+    <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trees">
+      <path d="M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z"/>
+      <path d="M7 16v6"/>
+      <path d="M13 19v3"/>
+      <path d="M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5"/>
+    </svg>
+  </div>
+
+  <!-- Leaf Icon (gray, rotated) -->
+  <div
+    class="absolute bottom-[5%] left-[60%] scale-[.6] rotate-45 xl:bottom-[15%] xl:left-[35%] z-10"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf">
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+    </svg>
+  </div>
+
+  <!-- Background overlay for better text readability -->
+  <div class="absolute inset-0 z-20" style="background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%,  rgba(0,0,0,0.1) 100%);"></div>
+  
+  <!-- Content container with relative positioning -->
+  <div class="relative z-30 mx-auto max-w-[85rem] px-4 pb-24 pt-10 sm:px-6 lg:px-8">
+  <!-- Hero Section Heading -->
+  <div class="mx-auto mt-5 max-w-xl text-center">
+    <h2
+      class="block text-balance text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl"
+    >
+      {title}
+    </h2>
+  </div>
+  <!-- Hero Section Sub-heading -->
+  <div class="mx-auto mt-5 max-w-3xl text-center">
+    {
+      subTitle && (
+        <p class="text-pretty text-lg text-white/90">
+          {subTitle}
+        </p>
+      )
+    }
+  </div>
+  <!-- Primary CTA Button -->
+  {
+    url && (
+      <div class="mt-8 flex justify-center gap-3">
+        <PrimaryCTA title={btnTitle} url={url} noArrow/>
+      </div>
+    )
+  }
+  </div>
+</section>

@@ -1,0 +1,138 @@
+---
+// Importing necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import MainSection from "@components/ui/blocks/MainSection.astro";
+import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
+import CardSmall from "@components/ui/cards/CardSmall.astro";
+import CardWide from "@components/ui/cards/CardWide.astro";
+import FeaturesStatsAlt from "@components/sections/features/FeaturesStatsAlt.astro";
+import TestimonialsSectionAlt from "@components/sections/testimonials/TestimonialsSectionAlt.astro";
+
+// Import necessary images
+import sustainable from "@images/suistainable.jpg";
+
+// Importing necessary functions from Astro
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+// Fetching all the sustainability related content and sorting it by main.id
+const sustainability: CollectionEntry<"sustainability">[] = (
+  await getCollection("sustainability", ({ id }) => {
+    return id.startsWith("fr/");
+  })
+).sort(
+  (a: CollectionEntry<"sustainability">, b: CollectionEntry<"sustainability">) =>
+    a.data.main.id - b.data.main.id
+);
+
+// Define variables for page content
+const title: string = "Durabilité";
+const subTitle: string =
+  "Explorez nos pratiques durables et solutions écologiques conçues aussi bien pour les professionnels que pour les amateurs. Chacune de nos initiatives de durabilité est fabriquée avec conscience environnementale et conçue pour durer, garantissant un avenir plus vert pour tous.";
+
+// Testimonial data that will be rendered in the component
+const testimonials = [
+{
+    "content": "Une agriculture durable ne doit pas épuiser les sols ni les hommes. Il s’agit de cultiver la terre de manière à régénérer les écosystèmes tout en garantissant que les communautés agricoles restent en bonne santé, prospères et résilientes pour les générations futures.",
+    "author": "Wendell Berry",
+    "role": "Écrivain, agriculteur et défenseur de l’agriculture durable"
+  },
+  {
+    "content": "Si nous n’atteignons pas la durabilité dans l’agriculture en premier, elle n’arrivera jamais ailleurs. L’agriculture est la base de la survie humaine, et à moins que nos systèmes agricoles ne fonctionnent en harmonie avec la nature, tout autre effort vers la durabilité finira par échouer.",
+    "author": "Wes Jackson",
+    "role": "Généticien et fondateur de The Land Institute"
+  },
+  {
+    "content": "La bioéconomie, s’appuyant sur des méthodes circulaires, agroforestières et biologiques, est essentielle pour stopper la déforestation et préserver le capital naturel au service de systèmes alimentaires durables. En intégrant des innovations issues du bio, nous pouvons restaurer les terres dégradées, protéger la biodiversité et créer des moyens de subsistance qui respectent à la fois les populations et la planète.",
+    "author": "Marc Palahi",
+    "role": "Expert en bioéconomie et cofondateur de la Circular Bioeconomy Alliance"
+  }
+];
+
+const pageTitle = "Durabilité | tresorajdir";
+const metaDescription =
+  "Explorez nos pratiques durables et solutions écologiques conçues aussi bien pour les professionnels que pour les passionnés.";
+const ogTitle = "Durabilité | tresorajdir";
+---
+
+<MainLayout
+  title={pageTitle}
+  lang="fr"
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://tresorajdir.com/fr/sustainability",
+    url: "https://tresorajdir.com/fr/sustainability",
+    name: "Durabilité | tresorajdir",
+    description:
+      "Explorez nos pratiques durables et solutions écologiques conçues aussi bien pour les professionnels que pour les passionnés.",
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://tresorajdir.com/fr",
+      name: "tresorajdir",
+      description:
+        "tresorajdir propose des pratiques durables et des solutions écologiques pour répondre à tous vos besoins environnementaux.",
+    },
+    inLanguage: "fr",
+  }}
+>
+  {/* MainSection is the introductory section of the page with background image */}
+  <MainSection
+    title="Durabilité"
+    subTitle="Explorez nos pratiques durables et solutions écologiques conçues aussi bien pour les professionnels que pour les amateurs. Chacune de nos initiatives de durabilité est fabriquée avec conscience environnementale et conçue pour durer, garantissant un avenir plus vert pour tous."
+    backgroundImage={sustainable}
+  />
+
+  <div
+    class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+  >
+    <div class="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
+      <div class="flex items-center gap-12">
+        <h1
+          class="text-2xl font-bold tracking-tight text-balance text-neutral-800 md:text-4xl md:leading-tight dark:text-neutral-200"
+        >
+          Nos Solutions Durables
+        </h1>
+      </div>
+      <PrimaryCTA
+        title="Témoignages"
+        url="#testimonials"
+        noArrow={true}
+      />
+    </div>
+    {/* Displaying sustainability items in alternating styles. Alternative sustainability item gets different card styling. */}
+    {/* Maps through all sustainability entries and displays them with either CardSmall or CardWide based on their position. */}
+    <section class="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
+              {
+          sustainability.map((sustainability, index) => {
+            const position = index % 4;
+            if (position === 0 || position === 3) {
+              return <CardSmall product={sustainability} productLocale="fr" />;
+            } else {
+              return <CardWide product={sustainability} productLocale="fr" />;
+            }
+          })
+        }
+    </section>
+  </div>
+  {/* Features statistics section */}
+  <FeaturesStatsAlt
+    title="Agriculteurs : pourquoi choisir l’agriculture durable ?"
+    subTitle="Face aux grands défis environnementaux actuels, de nombreux agriculteurs modifient leurs pratiques pour contribuer à la protection de l’environnement : l’agriculture durable vise à réduire au minimum l’impact environnemental de la production agricole."
+    benefits={[
+      "Résilience face au changement climatique",
+      "Économies à long terme : bien que la conversion aux pratiques agricoles durables puisse nécessiter un investissement initial, elle conduit souvent à des économies à long terme",
+      "Amélioration de la qualité des produits",
+      "Préservation de la biodiversité",
+      "Meilleure gestion des ressources en eau",
+      "Contribution à la sécurité alimentaire mondiale",
+    ]}
+  />
+  {/* Testimonials section */}
+  <TestimonialsSectionAlt
+    title="Ce que disent les Experts"
+    testimonials={testimonials}
+  />
+</MainLayout>

@@ -1,0 +1,29 @@
+{
+  "subTitle": "Ask us anything about our apple orchard and products, and get factual responses.",
+  "faqs": [
+    {
+      "question": "What types of apples do you grow in your orchard?",
+      "answer": "Our orchard features a diverse selection of apple varieties including Gala, Fuji, Granny Smith, Honeycrisp, and Golden Delicious. We carefully cultivate each variety to ensure the highest quality and flavor, offering both sweet and tart options to suit different preferences."
+    },
+    {
+      "question": "Can I visit your orchard for apple picking?",
+      "answer": "Absolutely! We offer seasonal apple picking experiences where visitors can hand-pick their own fresh apples directly from our trees. Our orchard tours are available during harvest season, providing a wonderful family-friendly activity. Contact us for current availability and booking information."
+    },
+    {
+      "question": "What discounts are available for bulk orders of apples?",
+      "answer": "We offer special pricing for bulk orders, with discounts varying based on quantity and season. Whether you're a restaurant, grocery store, or planning a large event, we can provide custom pricing. Contact our sales team to discuss your specific needs and receive a tailored quote."
+    },
+    {
+      "question": "How do you ensure the quality and freshness of your apples?",
+      "answer": "We maintain strict quality control throughout our growing process, from careful tree maintenance to proper harvesting techniques. Our apples are picked at peak ripeness and stored in optimal conditions to maintain freshness. We also offer delivery services to ensure your apples arrive in perfect condition."
+    },
+    {
+      "question": "Do you offer organic apple varieties?",
+      "answer": "Yes, we grow both conventional and organic apple varieties. Our organic apples are cultivated using sustainable farming practices without synthetic pesticides or fertilizers. We're committed to providing healthy, delicious apples while maintaining environmental responsibility."
+    },
+    {
+      "question": "Can you supply apples for large-scale events or commercial use?",
+      "answer": "Yes, we specialize in supplying apples for large events, restaurants, bakeries, and commercial operations. Our Enterprise Solutions include custom packaging, regular delivery schedules, and consultation on apple selection for specific uses. Contact us for a customized quote tailored to your business needs."
+    }
+  ]
+}

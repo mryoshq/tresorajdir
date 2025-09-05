@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import emblem from "@images/emblemlogo.png";
+
+// Get theme from props or default to 'light'
+const { theme = 'light', ...props } = Astro.props;
+---
+
+<div class="logo-container h-auto w-24 sm:w-32 md:w-32 lg:w-46" {...props}>
+  <Image
+    src={emblem}
+    alt="AJDIR Orchard Logo"
+    draggable="false"
+    loading="eager"
+    class="logo-light"
+    format="avif"
+  />
+  <Image
+    src={emblem}
+    alt="AJDIR Orchard Logo"
+    draggable="false"
+    loading="eager"
+    class="logo-dark"
+    format="avif"
+  />
+</div>
+<style>
+  .logo-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .logo-light {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .logo-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  :global(.dark) .logo-light {
+    opacity: 0;
+  }
+  
+  :global(.dark) .logo-dark {
+    opacity: 1;
+  }
+</style>
+

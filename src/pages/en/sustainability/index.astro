@@ -1,0 +1,139 @@
+---
+// Importing necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import MainSection from "@components/ui/blocks/MainSection.astro";
+import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
+import CardSmall from "@components/ui/cards/CardSmall.astro";
+import CardWide from "@components/ui/cards/CardWide.astro";
+import FeaturesStatsAlt from "@components/sections/features/FeaturesStatsAlt.astro";
+import TestimonialsSectionAlt from "@components/sections/testimonials/TestimonialsSectionAlt.astro";
+
+// Import necessary images
+import orchards from "@images/suistainable.jpg";
+
+// Importing necessary functions from Astro
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@data/constants";
+
+// Fetching all the sustainability related content and sorting it by main.id
+const sustainability: CollectionEntry<"sustainability">[] = (
+  await getCollection("sustainability", ({ id }) => {
+    return id.startsWith("en/");
+  })
+).sort(
+  (a: CollectionEntry<"sustainability">, b: CollectionEntry<"sustainability">) =>
+    a.data.main.id - b.data.main.id
+);
+
+// Define variables for page content
+const title: string = "Sustainability";
+const subTitle: string =
+  "Explore our sustainable practices and eco-friendly solutions designed for both professionals and enthusiasts. Each of our sustainability initiatives is crafted with environmental consciousness and built to last, ensuring a greener future for all.";
+
+// Testimonial data that will be rendered in the component
+const testimonials = [
+  // First testimonial data
+  {
+    "content": "A sustainable agriculture does not deplete soils or people. It is about cultivating the land in ways that regenerate ecosystems while ensuring that farming communities remain healthy, prosperous, and resilient for generations to come.",
+    "author": "Wendell Berry",
+    "role": "Writer, farmer, and advocate of sustainable agriculture"
+  },
+  {
+    "content": "If we don’t get sustainability in agriculture first, sustainability will not happen. Agriculture is the foundation of human survival, and unless our farming systems work in harmony with nature, every other effort toward sustainability will eventually fail.",
+    "author": "Wes Jackson",
+    "role": "Geneticist and founder of The Land Institute"
+  },
+  {
+    "content": "The bioeconomy, leveraging circular, agro-forestry and organic methods, is crucial to stop deforestation and preserve natural capital for sustainable food systems. By integrating bio-based innovations, we can restore degraded lands, protect biodiversity, and create livelihoods that respect both people and the planet.",
+    "author": "Marc Palahi",
+    "role": "Bioeconomy expert and co-founder of the Circular Bioeconomy Alliance"
+  }
+];
+
+const pageTitle: string = `Sustainability | ${SITE.title}`;
+const metaDescription =
+  "Explore our sustainable practices and eco-friendly solutions designed for both professionals and enthusiasts.";
+const ogTitle = "Sustainability | tresorajdir";
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://tresorajdir.com/sustainability",
+    url: "https://tresorajdir.com/sustainability",
+    name: "Sustainability | tresorajdir",
+    description:
+      "Explore our sustainable practices and eco-friendly solutions designed for both professionals and enthusiasts.",
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://tresorajdir.com",
+      name: "tresorajdir",
+      description:
+        "tresorajdir offers sustainable practices and eco-friendly solutions to meet all your environmental needs.",
+    },
+    inLanguage: "en-US",
+  }}
+>
+
+  {/* MainSection is the introductory section of the page with background image */}
+  <MainSection
+    title="Sustainability"
+    subTitle="Explore our sustainable practices and eco-friendly solutions designed for both professionals and enthusiasts. Each of our sustainability initiatives is crafted with environmental consciousness and built to last, ensuring a greener future for all."
+    backgroundImage={orchards}
+  />
+
+  {/* solutions section */}
+  <div
+    class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+  >
+    <div class="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
+      <div class="flex items-center gap-12">
+        <h1
+          class="text-2xl font-bold tracking-tight text-balance text-neutral-800 md:text-4xl md:leading-tight dark:text-neutral-200"
+        >
+          Our Sustainable Solutions
+        </h1>
+      </div>
+      <PrimaryCTA title="Testimonials" url="#testimonials" noArrow={true} />
+    </div>
+    {/* Displaying sustainability items in alternating styles. Alternative sustainability item gets different card styling.
+    Maps through all sustainability entries and displays them with either CardSmall or CardWide based on their position. */}
+    <section class="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
+      {
+        sustainability.map((sustainability, index) => {
+          const position = index % 4;
+          if (position === 0 || position === 3) {
+            return <CardSmall product={sustainability} />;
+          } else {
+            return <CardWide product={sustainability} />;
+          }
+        })
+      }
+    </section>
+  </div>
+
+  {/* Features statistics section */}
+  <FeaturesStatsAlt
+    title="Farmers: why choose sustainable agriculture ?"
+    subTitle="Faced with today’s major environmental challenges, many farmers are changing their practices to help protect the environment : Sustainable agriculture aims to minimize the environmental impact of agricultural production."
+    benefits={[
+      "Resilience to climate change.",
+      "Long-term savings: while converting to sustainable farming practices may require an initial investment, it can often lead to long-term savings.",
+      "Improving product quality",
+      "Maintaining biodiversity",
+      "Better management of water resources",
+      "Contributing to global food security"
+    ]}
+  />
+
+  {/* Testimonials section */} 
+  <TestimonialsSectionAlt
+    title="What Experts Say"
+    testimonials={testimonials}
+  />
+</MainLayout>

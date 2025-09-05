@@ -1,0 +1,375 @@
+---
+// Import the necessary dependencies
+import { Image } from "astro:assets";
+import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
+import SecondaryCTA from "@components/ui/buttons/SecondaryCTA.astro";
+
+// Define props from Astro
+const {
+  title,
+  subTitle,
+  primaryBtn,
+  primaryBtnURL,
+  secondaryBtn,
+  secondaryBtnURL,
+  src,
+  alt
+} = Astro.props;
+
+// Define TypeScript interface for props
+interface Props {
+  title: string;
+  subTitle?: string;
+  primaryBtn?: string;
+  primaryBtnURL?: string;
+  secondaryBtn?: string;
+  secondaryBtnURL?: string;
+  src?: any;
+  alt?: string;
+}
+---
+
+<!-- Defining a grid container that holds all the content -->
+<section
+  class="mx-auto grid max-w-[85rem] gap-4 px-4 py-14 sm:px-6 md:grid-cols-2 md:items-center md:gap-8 lg:px-8 2xl:max-w-full relative overflow-hidden overflow-x-hidden" style="height: 100vh;">
+  
+  <!-- Light Mode: Particles -->
+  <div class='absolute inset-0 block dark:hidden'>
+    <div id='particles1-hero' class='absolute inset-0'></div>
+    <div id='particles2-hero' class='absolute inset-0'></div>
+    <div id='particles3-hero' class='absolute inset-0'></div>
+  </div>
+
+  <!-- Dark Theme: Stars -->
+  <div class='absolute inset-0 hidden dark:block'>
+    <div id='stars1-hero' class='absolute inset-0'></div>
+    <div id='stars2-hero' class='absolute inset-0'></div>
+    <div id='stars3-hero' class='absolute inset-0'></div>
+  </div>
+
+  <!-- Dark Theme: Twinkling Stars / Meteors -->
+  <div id="galaxy" class="absolute inset-0">
+    <div class="hidden dark:block">
+      <!-- Meteors will be created dynamically -->
+    </div>
+  </div>
+
+  <!-- Twinkling Stars Template (hidden) -->
+  <svg 
+    id="twinkle-star" 
+    class="template absolute left-full animate-twinkle" 
+    width="149" 
+    height="149" 
+    viewBox="0 0 149 149" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    style="display: none;"
+  >
+    <circle cx="74" cy="74" r="11" fill="#98141d"/>
+    <rect y="141.421" width="200" height="10" transform="rotate(-45 0 141.421)" fill="url(#paint0_linear_4_2)"/>
+    <rect x="7.07107" width="200" height="10" transform="rotate(45 7.07107 0)" fill="url(#paint1_linear_4_2)"/>
+    <defs>
+      <linearGradient id="paint0_linear_4_2" x1="0" y1="146.421" x2="200" y2="146.421" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#1E1E1E"/>
+        <stop offset="0.445" stop-color="#98141d"/>
+        <stop offset="0.58721" stop-color="#98141d"/>
+        <stop offset="1" stop-color="#1E1E1E"/>
+      </linearGradient>
+      <linearGradient id="paint1_linear_4_2" x1="7.07107" y1="5" x2="207.071" y2="5" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#1E1E1E"/>
+        <stop offset="0.42" stop-color="#98141d"/>
+        <stop offset="0.555" stop-color="#98141d"/>
+        <stop offset="1" stop-color="#1E1E1E"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Title and description -->
+  <div class="relative z-10 order-2 md:order-1">
+    <!-- Each h1 and p tag renders a portion of the title and subTitle defined above -->
+    <h1
+      class="block text-balance text-3xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 sm:text-4xl lg:text-6xl lg:leading-tight"
+    >
+      <!-- About Fragment: https://docs.astro.build/en/basics/astro-syntax/#fragments -->
+      <Fragment set:html={title} />
+    </h1>
+    {subTitle &&
+    <p
+      class="mt-3 text-pretty text-lg leading-relaxed text-neutral-700 dark:text-neutral-400 lg:w-4/5"
+    >
+      {subTitle}
+    </p>
+  }
+    <!-- Action Button Section: This section includes two CTAs with their own styles and URL -->
+    <div class="mt-7 grid w-full gap-3 sm:inline-flex">
+      {primaryBtn && 
+      <PrimaryCTA title={primaryBtn} url={primaryBtnURL} />
+      }
+      {secondaryBtn && 
+      <SecondaryCTA title={secondaryBtn} url={secondaryBtnURL} />
+      }
+    </div>
+
+ 
+  </div>
+  
+  <!-- Hero Image Section -->
+  {src && alt && (
+    <div class="flex w-full relative z-10 order-1 md:order-2">
+      <div class="top-12 overflow-hidden">
+        <Image
+          src={src}
+          alt={alt}
+          class="h-full w-full scale-110 object-cover object-center"
+          draggable={"false"}
+          loading={"eager"}
+          format={"avif"}
+        />
+      </div>
+    </div>
+  )}
+
+  <script is:inline>
+    // Initialize background for hero section
+    function generateParticles(n) {
+      let value = `${Math.floor(Math.random() * 2560)}px ${Math.floor(Math.random() * 2560)}px #98141d`;
+      for (let i = 2; i <= n; i++) {
+        // Alternate between red and green
+        const color = i % 2 === 0 ? '#98141d' : '#006233';
+        value += `, ${Math.floor(Math.random() * 2560)}px ${Math.floor(Math.random() * 2560)}px ${color}`;
+      }
+      return value;
+    }
+
+    function generateStars(n) {
+      let value = `${Math.floor(Math.random() * 2560)}px ${Math.floor(Math.random() * 2560)}px #fff`;
+      for (let i = 2; i <= n; i++) {
+        value += `, ${Math.floor(Math.random() * 2560)}px ${Math.floor(Math.random() * 2560)}px #fff`;
+      }
+      return value;
+    }
+
+    function createMeteor() {
+      let meteor = document.createElement("div");
+      meteor.setAttribute("class", "meteor");
+      
+      // Randomize meteor properties
+      const trailLength = Math.random() * 200 + 100; // 100-300px
+      const meteorSize = Math.random() * 3 + 1; // 1-4px
+      const animationDuration = Math.random() * 2000 + 2000; // 2-4 seconds
+      const opacity = Math.random() * 0.4 + 0.3; // 0.3-0.7
+      
+      // Position meteor at top of screen with random horizontal position
+      const maxLeft = Math.max(0, window.innerWidth - 50);
+      meteor.style.left = Math.round(Math.random() * maxLeft) + "px";
+      meteor.style.top = "-10px";
+      meteor.style.width = meteorSize + "px";
+      meteor.style.height = meteorSize + "px";
+      meteor.style.opacity = opacity;
+      meteor.style.position = "absolute";
+      meteor.style.zIndex = "1000";
+      
+      // Create randomized trail effect
+      let trail = document.createElement("div");
+      trail.style.position = "absolute";
+      trail.style.width = trailLength + "px";
+      trail.style.height = "2px";
+      trail.style.background = "linear-gradient(90deg, transparent, #98141d)";
+      trail.style.transform = "translateX(-" + trailLength + "px)";
+      trail.style.opacity = opacity * 0.8;
+      trail.style.top = "50%";
+      trail.style.marginTop = "-1px";
+      trail.style.zIndex = "999";
+      
+      // Debug: Make trail more visible
+      console.log(`Creating meteor with trail length: ${trailLength}px`);
+      
+      // Add dark mode support for trail
+      if (document.documentElement.classList.contains('dark')) {
+        trail.style.background = "linear-gradient(90deg, transparent, #fff)";
+      }
+      
+      // Append trail to meteor
+      meteor.appendChild(trail);
+      
+      // Add custom animation for diagonal movement
+      meteor.style.animation = `meteor ${animationDuration}ms linear forwards`;
+      
+      // Append to galaxy container instead of body
+      const galaxy = document.getElementById("galaxy");
+      if (galaxy) {
+        galaxy.appendChild(meteor);
+      } else {
+        document.body.appendChild(meteor);
+      }
+    
+      setTimeout(() => {
+        if (meteor.parentNode) {
+          meteor.remove();
+        }
+      }, animationDuration);
+    }
+
+    function createMeteorShower() {
+      // Create 1-3 meteors at once
+      const meteorCount = Math.floor(Math.random() * 3) + 1;
+      
+      console.log(`Creating meteor shower with ${meteorCount} meteors`);
+      
+      for (let i = 0; i < meteorCount; i++) {
+        // Stagger meteors slightly
+        setTimeout(() => {
+          createMeteor();
+        }, i * 300); // Increased delay for better visibility
+      }
+    }
+
+    function initHeroBG() {
+      // Initialize hero section background
+      const particlesSmall = generateParticles(1000);
+      const particlesMedium = generateParticles(500);
+      const particlesLarge = generateParticles(250);
+      
+      const particles1 = document.getElementById('particles1-hero');
+      const particles2 = document.getElementById('particles2-hero');
+      const particles3 = document.getElementById('particles3-hero');
+
+      if (particles1) {
+        particles1.style.cssText = `
+          width: 1px;
+          height: 1px;
+          border-radius: 50%;
+          box-shadow: ${particlesSmall};
+          animation: animStar 50s linear infinite;
+        `;
+      }
+
+      if (particles2) {
+        particles2.style.cssText = `
+          width: 1.5px;
+          height: 1.5px;
+          border-radius: 50%;
+          box-shadow: ${particlesMedium};
+          animation: animateParticle 100s linear infinite;
+        `;
+      }
+
+      if (particles3) {
+        particles3.style.cssText = `
+          width: 2px;
+          height: 2px;
+          border-radius: 50%;
+          box-shadow: ${particlesLarge};
+          animation: animateParticle 150s linear infinite;
+        `;
+      }
+
+      const starsSmall = generateStars(1000);
+      const starsMedium = generateStars(500);
+      const starsLarge = generateStars(250);
+      
+      const stars1 = document.getElementById('stars1-hero');
+      const stars2 = document.getElementById('stars2-hero');
+      const stars3 = document.getElementById('stars3-hero');
+
+      if (stars1) {
+        stars1.style.cssText = `
+          width: 1px;
+          height: 1px;
+          border-radius: 50%;
+          box-shadow: ${starsSmall};
+          animation: animStar 50s linear infinite;
+        `;
+      }
+
+      if (stars2) {
+        stars2.style.cssText = `
+          width: 1.5px;
+          height: 1.5px;
+          border-radius: 50%;
+          box-shadow: ${starsMedium};
+          animation: animateParticle 100s linear infinite;
+        `;
+      }
+
+      if (stars3) {
+        stars3.style.cssText = `
+          width: 2px;
+          height: 2px;
+          border-radius: 50%;
+          box-shadow: ${starsLarge};
+          animation: animateParticle 150s linear infinite;
+        `;
+      }
+
+      // Start meteor shower with randomized timing
+      function startMeteorShower() {
+        const baseInterval = 2000; // Base interval in ms
+        const randomInterval = Math.random() * 3000 + baseInterval; // 2-5 seconds
+        
+        console.log(`Starting meteor shower, next in ${randomInterval}ms`);
+        createMeteorShower();
+        
+        setTimeout(startMeteorShower, randomInterval);
+      }
+      
+      // Start immediately and then continue with intervals
+      createMeteorShower();
+      startMeteorShower();
+    }
+
+    // Twinkling Stars functionality
+    function generateTwinkleStar() {
+      const twinkleStarTemplate = document.getElementById("twinkle-star");
+      if (!twinkleStarTemplate) { return; }
+      
+      // Get hero section height (100vh)
+      const heroHeight = window.innerHeight;
+      
+      // Clone the twinkle star template and set its attributes
+      const twinkleStar = twinkleStarTemplate.cloneNode(true);
+      twinkleStar.style.position = "absolute";
+      // Ensure twinkle star stays within viewport bounds
+      const maxLeft = Math.max(0, window.innerWidth - 50); // Leave some margin
+      twinkleStar.style.left = Math.floor(Math.random() * maxLeft) + "px";
+      twinkleStar.style.top = Math.floor(Math.random() * heroHeight) + "px";
+      twinkleStar.style.width = window.innerWidth < 768 ? Math.floor(Math.random() * (15 - 7.5 + 1) + 7.5) : Math.floor(Math.random() * (30 - 15 + 1) + 15) + "px";
+      twinkleStar.style.height = twinkleStar.style.width;
+      twinkleStar.classList.add("twinkle");
+      twinkleStar.style.display = "block";
+      
+      // Add dark mode support
+      if (document.documentElement.classList.contains('dark')) {
+        const circle = twinkleStar.querySelector('circle');
+        if (circle) {
+          circle.setAttribute('fill', 'white');
+        }
+        const stops = twinkleStar.querySelectorAll('stop[stop-color="#98141d"]');
+        stops.forEach(stop => {
+          stop.setAttribute('stop-color', 'white');
+        });
+      }
+      
+      document.getElementById("galaxy").appendChild(twinkleStar);
+
+      // Remove the twinkle star after the animation is completed
+      setTimeout(() => {
+        twinkleStar.remove();
+      }, 2500);
+    }
+
+    // Start twinkling stars
+    setInterval(generateTwinkleStar, 5000);
+
+    // Wait for DOM to be ready and then initialize
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeroBG);
+    } else {
+      // DOM is already ready
+      setTimeout(initHeroBG, 100);
+    }
+
+    // Also try to initialize after Astro page transitions
+    document.addEventListener('astro:after-swap', initHeroBG);
+  </script>
+</section>

@@ -1,0 +1,343 @@
+---
+// Import relevant dependencies
+import ThemeIcon from "@components/misc/ThemeIcon.astro";
+import NavLink from "@components/ui/links/NavLink.astro";
+import enStrings from "@utils/navigation.ts";
+import frStrings from "@utils/fr/navigation.ts";
+import BrandLogo from "@components//misc/BrandLogo.astro";
+import LanguagePicker from "@components/ui/LanguagePicker.astro";
+
+// Select the correct translation based on the page's lang prop:
+const strings = Astro.currentLocale === "fr" ? frStrings : enStrings;
+const homeUrl = Astro.currentLocale === "fr" ? "/" : "/en";
+
+// Split navigation links into left and right groups
+const leftLinks = strings.navBarLinks.slice(0, 3);
+const rightLinks = strings.navBarLinks.slice(3, 6);
+---
+
+<!-- Main header component with shrink-on-scroll functionality -->
+<header
+  id="main-header"
+  class="fixed inset-x-0 top-0 z-50 w-full transition-all duration-300"
+>
+  <!-- Navigation container -->
+  <nav
+    class="relative w-full px-4 py-3 backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-2 lg:px-8"
+    aria-label="Global"
+  >
+    <!-- Desktop Layout: Centered logo with links grouped around it -->
+    <div class="hidden md:flex md:items-center md:justify-between md:w-full">
+      <!-- Left side (empty for balance) -->
+      <div class="flex-1"></div>
+
+      <!-- Centered Logo and Navigation Links Group -->
+      <div class="flex items-center gap-x-4 lg:gap-x-6">
+        <!-- Left Navigation Links -->
+        <div class="flex items-center gap-x-3 lg:gap-x-4">
+          {leftLinks.map(link => (
+            <NavLink url={link.url} name={link.name} />
+          ))}
+        </div>
+
+        <!-- Centered Logo -->
+        <div class="flex justify-center">
+          <a
+            class="w-10 flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden transition-transform duration-300"
+            href={homeUrl}
+            aria-label="Brand"
+          >
+            <BrandLogo class="h-auto w-10 navbar-logo" />
+          </a>
+        </div>
+
+        <!-- Right Navigation Links -->
+        <div class="flex items-center gap-x-3 lg:gap-x-4">
+          {rightLinks.map(link => (
+            <NavLink url={link.url} name={link.name} />
+          ))}
+        </div>
+      </div>
+
+      <!-- Right-Side Controls -->
+      <div class="flex-1 flex justify-end items-center gap-x-2">
+        <LanguagePicker />
+        <ThemeIcon />
+      </div>
+    </div>
+
+    <!-- Mobile Layout: Logo centered with hamburger menu -->
+    <div class="flex md:hidden items-center w-full relative">
+      <!-- Centered Logo for Mobile - truly centered on screen -->
+      <div class="flex justify-center w-full">
+        <a
+          class="w-10 flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden transition-transform duration-300"
+          href={homeUrl}
+          aria-label="Brand"
+        >
+          <BrandLogo class="h-auto w-10 navbar-logo" />
+        </a>
+      </div>
+
+      <!-- Mobile Right-Side Controls -->
+      <div class="flex items-center gap-x-2 absolute right-0 z-10">
+        <LanguagePicker />
+        <ThemeIcon />
+        <!-- Hamburger Menu Button -->
+        <button
+          type="button"
+          class="hs-collapse-toggle flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-neutral-600 transition duration-300 hover:bg-neutral-200 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-100 dark:hover:bg-neutral-00 dark:focus:outline-hidden"
+          data-hs-collapse="#navbar-collapse-with-animation"
+          aria-controls="navbar-collapse-with-animation"
+          aria-label="Toggle navigation"
+        >
+          <!-- SVG icons for hamburger menu -->
+          <svg class="h-[1.25rem] w-[1.25rem] shrink-0 hs-collapse-open:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <svg class="hidden h-[1.25rem] w-[1.25rem] shrink-0 hs-collapse-open:block" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Collapsible Menu -->
+    <div
+      id="navbar-collapse-with-animation"
+      class="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:hidden"
+    >
+      <div class="mt-5 flex flex-col gap-x-0 gap-y-4">
+        {strings.navBarLinks.map(link => (
+          <NavLink url={link.url} name={link.name} />
+        ))}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Script to shrink navbar on scroll -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const header = document.getElementById("main-header") as HTMLElement;
+    const nav = header?.querySelector("nav") as HTMLElement;
+    const logo = header?.querySelector("a[aria-label='Brand']") as HTMLElement;
+    const navLinks = header?.querySelectorAll(".nav-link") as NodeListOf<HTMLElement>;
+    
+    if (!header || !nav || !logo) return;
+
+    // Set initial background color
+    const normalOpacity = 0.6;
+    nav.style.backgroundColor = `rgba(220, 252, 231, ${normalOpacity})`;
+
+    const scrollThreshold = 10; // Distance before shrinking starts
+    const shrinkThreshold = 20; // Distance for full shrink effect
+
+    window.addEventListener("scroll", function () {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop > scrollThreshold) {
+        // Start shrinking effect
+        const shrinkProgress = Math.min((scrollTop - scrollThreshold) / (shrinkThreshold - scrollThreshold), 1);
+        
+        // Shrink the header height more dramatically
+        nav.style.paddingTop = `${Math.max(0.25, 0.75 - shrinkProgress * 0.5)}rem`;
+        nav.style.paddingBottom = `${Math.max(0.25, 0.75 - shrinkProgress * 0.5)}rem`;
+        
+        // Shrink the logo more dramatically
+        logo.style.transform = `scale(${Math.max(0.85, 1 - shrinkProgress * 0.15)})`;
+        
+        // Add border bottom with goldenbrown-400 color when shrinking
+        nav.style.borderBottom = shrinkProgress > 0.3 ? '1px solid #d97706' : 'none';
+        
+        // Dynamic opacity: 60% normal, 30% when shrunk
+        const normalOpacity = 0.6; // Normal state opacity
+        const shrunkOpacity = 0.3; // Shrunk state opacity
+        const currentOpacity = normalOpacity - (shrinkProgress * (normalOpacity - shrunkOpacity));
+        
+        // Use same base green-100 color with dynamic opacity
+        nav.style.backgroundColor = `rgba(220, 252, 231, ${currentOpacity})`;
+        
+        // Add shadow for better visibility when shrunk
+        nav.style.boxShadow = shrinkProgress > 0.5 ? '0 2px 10px rgba(0,0,0,0.1)' : 'none';
+        
+        // Shrink nav links more dramatically
+        navLinks?.forEach(link => {
+          link.style.fontSize = `${Math.max(0.75, 1 - shrinkProgress * 0.25)}rem`;
+        });
+        
+        header.classList.add("scrolled");
+      } else {
+        // Reset to original size
+        nav.style.paddingTop = "0.75rem";
+        nav.style.paddingBottom = "0.75rem";
+        logo.style.transform = "scale(1)";
+        nav.style.borderBottom = "none";
+        
+        // Reset to normal opacity (60%)
+        const normalOpacity = 0.6;
+        nav.style.backgroundColor = `rgba(220, 252, 231, ${normalOpacity})`;
+        
+        nav.style.boxShadow = "none";
+        
+        navLinks?.forEach(link => {
+          link.style.fontSize = "1rem";
+        });
+        
+        header.classList.remove("scrolled");
+      }
+    });
+  });
+</script>
+
+<!-- Theme Appearance script to manage light/dark modes -->
+<script is:inline>
+  const HSThemeAppearance = {
+    init() {
+      const defaultTheme = "default";
+      let theme = localStorage.getItem("hs_theme") || defaultTheme;
+
+      if (document.querySelector("html").classList.contains("dark")) return;
+      this.setAppearance(theme);
+    },
+    _resetStylesOnLoad() {
+      const $resetStyles = document.createElement("style");
+      $resetStyles.innerText = `*{transition: unset !important;}`;
+      $resetStyles.setAttribute("data-hs-appearance-onload-styles", "");
+      document.head.appendChild($resetStyles);
+      return $resetStyles;
+    },
+    setAppearance(theme, saveInStore = true, dispatchEvent = true) {
+      const $resetStylesEl = this._resetStylesOnLoad();
+
+      if (saveInStore) {
+        localStorage.setItem("hs_theme", theme);
+      }
+
+      if (theme === "auto") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "default";
+      }
+
+      document.querySelector("html").classList.remove("dark");
+      document.querySelector("html").classList.remove("default");
+      document.querySelector("html").classList.remove("auto");
+
+      document
+        .querySelector("html")
+        .classList.add(this.getOriginalAppearance());
+
+      setTimeout(() => {
+        $resetStylesEl.remove();
+      });
+
+      if (dispatchEvent) {
+        window.dispatchEvent(
+          new CustomEvent("on-hs-appearance-change", { detail: theme }),
+        );
+      }
+    },
+    getAppearance() {
+      let theme = this.getOriginalAppearance();
+      if (theme === "auto") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "default";
+      }
+      return theme;
+    },
+    getOriginalAppearance() {
+      const defaultTheme = "default";
+      return localStorage.getItem("hs_theme") || defaultTheme;
+    },
+  };
+  HSThemeAppearance.init();
+
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
+      if (HSThemeAppearance.getOriginalAppearance() === "auto") {
+        HSThemeAppearance.setAppearance("auto", false);
+      }
+    });
+
+  window.addEventListener("load", () => {
+    const $clickableThemes = document.querySelectorAll(
+      "[data-hs-theme-click-value]",
+    );
+    const $switchableThemes = document.querySelectorAll(
+      "[data-hs-theme-switch]",
+    );
+
+    $clickableThemes.forEach(($item) => {
+      $item.addEventListener("click", () =>
+        HSThemeAppearance.setAppearance(
+          $item.getAttribute("data-hs-theme-click-value"),
+          true,
+          $item,
+        ),
+      );
+    });
+
+    $switchableThemes.forEach(($item) => {
+      $item.addEventListener("change", (e) => {
+        HSThemeAppearance.setAppearance(e.target.checked ? "dark" : "default");
+      });
+
+      $item.checked = HSThemeAppearance.getAppearance() === "dark";
+    });
+
+    window.addEventListener("on-hs-appearance-change", (e) => {
+      $switchableThemes.forEach(($item) => {
+        $item.checked = e.detail === "dark";
+      });
+    });
+  });
+</script>
+
+<style>
+  .navbar-logo .logo-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .navbar-logo .logo-light {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .navbar-logo .logo-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  :global(.dark) .navbar-logo .logo-light {
+    opacity: 0;
+  }
+  
+  :global(.dark) .navbar-logo .logo-dark {
+    opacity: 1;
+  }
+
+  /* Add padding to body to account for fixed header */
+  body {
+    padding-top: 4rem;
+  }
+
+  /* Smooth transitions for shrink effect */
+  #main-header nav {
+    transition: padding 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease, background-color 0.3s ease;
+  }
+
+  #main-header a[aria-label="Brand"] {
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link {
+    transition: font-size 0.3s ease;
+  }
+</style>

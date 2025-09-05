@@ -1,0 +1,39 @@
+---
+// AboutPageLayout component that wraps MainLayout with all metadata
+import MainLayout from "@/layouts/MainLayout.astro";
+import { SITE } from "@data/constants";
+
+interface Props {
+  lang: "en" | "fr";
+  pageTitle: string;
+  metaDescription: string;
+  ogTitle: string;
+  structuredData: {
+    "@context": string;
+    "@type": string;
+    "@id": string;
+    url: string;
+    name: string;
+    description: string;
+    isPartOf: {
+      "@type": string;
+      url: string;
+      name: string;
+      description: string;
+    };
+    inLanguage: string;
+  };
+}
+
+const { lang, pageTitle, metaDescription, ogTitle, structuredData } = Astro.props;
+---
+
+<MainLayout
+  title={pageTitle}
+  lang={lang}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={structuredData}
+>
+  <slot />
+</MainLayout>

@@ -1,0 +1,10 @@
+export { default as AboutPageLayout } from './AboutPageLayout.astro';
+export { default as AboutPageHeader } from './AboutPageHeader.astro';
+export { default as AboutHero } from './AboutHero.astro';
+export { default as AboutBenefits } from './AboutBenefits.astro';
+export { default as AboutTimeline } from './AboutTimeline.astro';
+export { default as AboutTeam } from './AboutTeam.astro';
+export { default as AboutVisualIdentity } from './AboutVisualIdentity.astro';
+export { default as AboutCTA } from './AboutCTA.astro';
+export { default as AboutFoundingStory } from './AboutFoundingStory.astro';
+export { default as AboutLocations } from './AboutLocations.astro';

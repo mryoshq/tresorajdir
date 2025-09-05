@@ -1,0 +1,23 @@
+---
+// Import the necessary components
+import { ContactPageLayout, ContactPageHeader, ContactForm, ContactInfo } from "@components/sections/contact";
+import { contactFrData } from "@data/contact-fr";
+import GuidesModal from "@components/ui/modals/GuidesModal.astro";
+---
+
+<ContactPageLayout {...contactFrData.pageLayout}>
+  <!-- Contact Us -->
+  <ContactPageHeader {...contactFrData.pageHeader} />
+
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div class="mx-auto max-w-2xl lg:max-w-5xl">
+      <div class="mt-12 grid items-center gap-6 lg:grid-cols-2 lg:gap-16">
+        <ContactForm {...contactFrData.form} />
+        <ContactInfo contactBlocks={contactFrData.contactBlocks} />
+      </div>
+    </div>
+    
+    <!-- Guides Modal -->
+    <GuidesModal lang={contactFrData.lang} />
+  </section>
+</ContactPageLayout>

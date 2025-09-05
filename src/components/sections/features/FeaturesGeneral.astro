@@ -1,0 +1,217 @@
+---
+// Import the necessary dependencies
+import { Image } from "astro:assets";
+import IconBlock from "@components/ui/blocks/IconBlock.astro";
+import Icon from "@components/ui/icons/Icon.astro";
+import applesketch from "@images/applesketch.png";
+import apple from "@images/apple.png";
+import appledroplet from "@images/appledroplet.png";
+
+interface Feature {
+  heading: string;
+  content: string;
+  svg: string;
+}
+
+interface Props {
+  title?: string;
+  subTitle?: string;
+  imageTitle?: string;
+  features?: Feature[];
+}
+// Define props from Astro
+const { title, subTitle, imageTitle, features } = Astro.props;
+---
+
+<section
+  class="mx-auto max-w-[95rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+  id="features-section"
+>
+  <!-- Container Block  -->
+  <div class="mt-5 lg:mt-4 rounded-md bg-green-700/10 py-5 dark:bg-green-50/10 ">
+   
+    <!-- Image Title -->
+    {imageTitle && (
+      <div class="mb-6 text-center">
+        <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200 md:text-4xl lg:text-5xl">
+          {imageTitle}
+        </h2>
+      </div>
+    )}
+    
+    <!-- Image Container with Scroll-triggered transitions -->
+    <div
+      class="w-full rounded-2xl"
+      id="scroll-image-container"
+    >
+      <div class="flex justify-center relative pb-16">
+        <!-- First Image: orchardsketch -->
+        <Image
+          src={applesketch}
+          alt="Orchard sketch - initial view"
+          class="max-w-8xl max-h-[40rem] w-auto h-auto object-cover object-center rounded-lg lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl"
+          id="image-1"
+          draggable={"false"}
+          format={"avif"}
+          loading={"eager"}
+        />
+        
+        <!-- Second Image: orchardfeatures -->
+        <Image
+          src={apple}
+          alt="Orchard features - scroll view"
+          class="max-w-8xl max-h-[40rem] w-auto h-auto object-cover object-center rounded-lg absolute top-0 left-1/2 transform -translate-x-1/2 lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl"
+          id="image-2"
+          draggable={"false"}
+          format={"avif"}
+          loading={"eager"}
+        />
+        
+        <!-- Third Image: orcharddroplet -->
+        <Image
+          src={appledroplet}
+          alt="Orchard droplet - final view"
+          class="max-w-8xl max-h-[40rem] w-auto h-auto object-cover object-center rounded-lg absolute top-0 left-1/2 transform -translate-x-1/2 lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl"
+          id="image-3"
+          draggable={"false"}
+          format={"avif"}
+          loading={"eager"}
+        />
+      </div>
+    </div> 
+
+    <!-- Displaying the main content consisting of title, subtitle, and several `IconBlock` components -->
+    <div class="mx-auto max-w-7xl grid gap-8 px-4 lg:grid-cols-3 lg:gap-12">
+      <!-- Block for title and subtitle -->
+      <div class="lg:col-span-1">
+        <!-- Rendering title -->
+        <h2
+          class="text-balance text-2xl font-bold text-neutral-800 dark:text-neutral-200 md:text-3xl"
+        >
+          {title}
+        </h2>
+        <!-- Rendering subtitle -->
+        {
+          subTitle && (
+            <p class="mt-2 text-pretty text-neutral-600 dark:text-neutral-400 md:mt-4">
+              {subTitle}
+            </p>
+          )
+        }
+      </div>
+
+      <!-- Block to display the IconBlock components -->
+      <div class="lg:col-span-2">
+        <div class="grid gap-8 sm:grid-cols-2 md:gap-12">
+          <!-- Injecting IconBlock components with different properties -->
+          { features &&
+            features.map((feature) => (
+              <IconBlock heading={feature.heading} content={feature.content}>
+                <Icon name={feature.svg} />
+              </IconBlock>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Script for scroll animations -->
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Function to initialize the scroll animations
+  function initScrollAnimations() {
+    console.log('FeaturesGeneral script loaded');
+    
+    const image1 = document.getElementById('image-1');
+    const image2 = document.getElementById('image-2');
+    const image3 = document.getElementById('image-3');
+    const section = document.getElementById('features-section');
+    
+    if (!image1 || !image2 || !image3 || !section) {
+      console.error('Some elements not found:', { image1, image2, image3, section });
+      return;
+    }
+    
+    console.log('All elements found, setting up GSAP');
+    
+    // Set initial states
+    gsap.set(image1, { opacity: 1 });
+    gsap.set(image2, { opacity: 0 });
+    gsap.set(image3, { opacity: 0 });
+    
+    // Create a timeline for the image transitions
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 2%", // Start when top of section is near the header
+        end: "+=100%", // Make the scroll section 1x the height for smooth transitions
+        scrub: 0.5, // Smooth scrubbing effect
+        pin: true, // Pin the entire section while scrolling
+        pinSpacing: true,
+        onEnter: () => {
+          console.log('Entering pinned section');
+        },
+        onLeave: () => {
+          console.log('Leaving pinned section');
+        },
+        onEnterBack: () => {
+          console.log('Entering back pinned section');
+        },
+        onLeaveBack: () => {
+          console.log('Leaving back pinned section');
+        }
+      }
+    });
+    
+    // First transition: orchardsketch → orchardfeatures (0-50%)
+tl.to(image1, { opacity: 0, duration: 0.3, ease: "power1.out" }, 0)
+  .to(image2, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 0.1)
+
+  // Second transition: orchardfeatures → orcharddroplet (50-100%)
+  // image2 appears briefly, then quickly blurs + fades
+  .to(image2, { 
+      opacity: 0.3, 
+      filter: "blur(6px)", 
+      duration: 0.6,              // shorter time visible
+      ease: "power2.inOut" 
+    }, 0.35)                      // start blur earlier
+  .to(image3, { 
+      opacity: 1, 
+      duration: 1.0, 
+      ease: "power2.inOut" 
+    }, 0.4);                      // overlaps quickly with image2
+
+    
+    console.log('GSAP timeline created');
+    
+    return tl;
+  }
+  
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollAnimations);
+  } else {
+    initScrollAnimations();
+  }
+  
+  // Cleanup function for Astro
+  document.addEventListener('astro:page-load', () => {
+    // Kill any existing ScrollTriggers
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    // Initialize new animations
+    initScrollAnimations();
+  });
+  
+  document.addEventListener('astro:before-swap', () => {
+    // Cleanup before page swap
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  });
+</script>

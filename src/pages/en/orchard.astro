@@ -1,0 +1,203 @@
+---
+// Import necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import MainSection from "@components/ui/blocks/MainSection.astro";
+import LeftSection from "@components/ui/blocks/LeftSection.astro";
+import RightSection from "@components/ui/blocks/RightSection.astro";
+import FeaturesStats from "@components/sections/features/FeaturesStats.astro";
+import FourImageSection from "@components/ui/blocks/FourImageSection.astro";
+
+// Import necessary images
+
+import applebasket from "@images/applebasket.jpg";
+import rose from "@images/rose.jpg";
+import personWorking from "@images/person-working.jpg";
+import treeCover from "@images/treeCover.jpg";
+import aerialView from "@images/aerial-view.jpg";
+import harvestSet from "@images/harvestSet.jpg";
+import redApples from "@images/red-apples.jpg";
+import yellowApples from "@images/yellow-apples.jpg";
+import orchards from "@images/orchards.jpg";
+import { SITE } from "@data/constants";
+
+interface Article {
+  isRightSection: boolean;
+  title: string;
+  subTitle: string;
+  btnExists?: boolean;
+  btnTitle?: string;
+  btnURL?: string;
+  single?: boolean;
+  img?: any;
+  imgAlt?: string;
+  imgOne?: any;
+  imgOneAlt?: string;
+  imgTwo?: any;
+  imgTwoAlt?: string;
+}
+
+const articles: Article[] = [
+  {
+    isRightSection: true,
+    title: "Premium Apple Varieties from Ajdir's Perfect Climate",
+    subTitle:
+      "Nestled in the heart of Morocco's Middle Atlas mountains, our orchards in Ajdir benefit from the region's ideal weather conditions, clean mountain waters, and rich soil. We cultivate the finest apple varieties, carefully selected for their exceptional taste, texture, and nutritional value. Our expert team ensures every tree receives the perfect care needed to produce premium quality apples.",
+    single: false,
+    imgOne: rose,
+    imgOneAlt: "Orchard planning and digital tablet with farming plans.",
+    imgTwo: aerialView,
+    imgTwoAlt: "Farmer working in the orchard office",
+  },
+  {
+    isRightSection: false,
+    title: "Sustainable Farming Excellence in the Middle Atlas",
+    subTitle:
+      "Our orchards represent the perfect harmony of traditional farming wisdom and modern agricultural practices. Located in Ajdir, Morocco, we leverage the region's natural advantages: pristine mountain water, optimal altitude, and the best working hands with generations of farming expertise. Our sustainable practices ensure that every apple we grow meets the highest standards of quality while preserving the natural beauty of the Middle Atlas region.",
+    img: treeCover,
+    imgAlt: "Orchard development before and after",
+    btnExists: true,
+    btnTitle: "Learn More",
+    btnURL: "#",
+  },
+  {
+    isRightSection: true,
+    title: "Infrastructure and Expertise: The Foundation of Quality",
+    subTitle:
+      "At our Ajdir orchards, we've invested in the best infrastructure to support our apple farming operations. From advanced irrigation systems that utilize the region's clean mountain waters to state-of-the-art storage facilities, every aspect of our operation is designed for excellence. Our team combines local expertise with modern farming techniques, ensuring consistent quality year after year.",
+    single: false,
+    imgOne: applebasket,
+    imgOneAlt: "Orchard workers managing apple trees",
+    imgTwo: aerialView ,
+    imgTwoAlt: "Aerial view of managed orchard",
+  },
+  {
+    isRightSection: false,
+    title: "From Tree to Table: Complete Apple Production",
+    subTitle:
+      "Our commitment to quality extends from the moment we plant our apple trees to the delivery of fresh, crisp apples to your table. We maintain rigorous quality control throughout the entire process, from careful tree selection and planting to harvesting at peak ripeness. Our facilities in Ajdir are equipped with the latest technology to preserve the freshness and flavor of our apples.",
+    img: harvestSet,
+    imgAlt:
+      "Farmer in orchard gear using sustainable farming tools",
+  },
+  {
+    isRightSection: true,
+    title: "Exporting Morocco's Finest Apples Worldwide",
+    subTitle:
+      "As a leading apple producer in Morocco's Middle Atlas region, we're proud to export our premium varieties to markets around the world. Our strategic location in Ajdir, combined with our superior infrastructure and expert team, allows us to deliver consistently high-quality apples that meet international standards. We work closely with our clients to ensure their specific requirements are met with the finest apples from Morocco's perfect growing conditions.",
+    single: false,
+    imgOne: redApples,
+    imgOneAlt: "Orchard in development with young trees",
+    imgTwo: yellowApples,
+    imgTwoAlt: "Orchard under development with irrigation systems",
+    btnExists: true,
+    btnTitle: "Read more",
+    btnURL: "#",
+  },
+];
+
+const pageTitle: string = `Orchard | ${SITE.title}`;
+const metaDescription =
+  "Discover premium apple varieties grown in the perfect climate of Ajdir, Morocco's Middle Atlas. Our orchards benefit from clean mountain waters, ideal weather, and expert farming practices.";
+const ogTitle = "Premium Apple Orchard in Ajdir, Morocco | AJDIR Orchard";
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://ajdir-orchard.com/orchard",
+    url: "https://ajdir-orchard.com/orchard",
+    name: "Premium Apple Orchard in Ajdir, Morocco | AJDIR Orchard",
+    description:
+      "Discover premium apple varieties grown in the perfect climate of Ajdir, Morocco's Middle Atlas. Our orchards benefit from clean mountain waters, ideal weather, and expert farming practices.",
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://ajdir-orchard.com",
+      name: "AJDIR Orchard",
+      description:
+        "AJDIR Orchard offers premium apple varieties grown in the perfect climate of Ajdir, Morocco's Middle Atlas mountains.",
+    },
+    inLanguage: "en-US",
+  }}
+>
+  {/* MainSection is the introductory section of the page with background image */}
+  <MainSection
+    title="Premium Apples from Morocco's Perfect Growing Region"
+    subTitle="Located in the heart of Ajdir, Morocco's Middle Atlas mountains, our orchards benefit from the region's ideal climate, clean mountain waters, and rich soil. We cultivate the finest apple varieties using sustainable farming practices and the expertise of local farmers with generations of experience."
+    backgroundImage={orchards}
+  />
+
+  {/* FeaturesStats section showcases essential stats valuable to users */}
+  <FeaturesStats
+    title="Our Orchard Excellence"
+    subTitle="Our commitment to quality and sustainable farming is evident in every apple we produce. At AJDIR Orchard, we are dedicated to delivering premium apples that showcase the perfect growing conditions of Morocco's Middle Atlas region."
+    mainStatTitle="100%"
+    mainStatSubTitle="of our clients rate our apple quality as exceptional"
+    stats={[
+      {
+        stat: "99.9%",
+        description: "harvest success rate",
+      },
+      {
+        stat: "10,000+",
+        description: "apple trees thriving in Ajdir",
+      },
+      {
+        stat: "100%",
+        description: "client satisfaction year-over-year",
+      },
+    ]}
+  />
+
+  {/* FourImageSection showcases orchard images in a grid layout */}
+  <FourImageSection
+    imgOne={aerialView}
+    imgOneAlt="Orchard planning and digital tablet with farming plans"
+    imgTwo={personWorking}
+    imgTwoAlt="Farmer working in the orchard office"
+    imgThree={applebasket}
+    imgThreeAlt="Orchard workers managing apple trees"
+    imgFour={rose}
+    imgFourAlt="Aerial view of managed orchard"
+  />
+  {/* RightSection and LeftSection contain details about various services along with pertinent imagery.
+  They alternate for variety in design.
+  The 'btnExists' property is used to toggle the display of a button in these sections.
+  When btnExists={true}, a button is displayed.
+  This can be used to link to more detailed information or related resources.
+  RightSection can also conditionally render one or two images based on the 'single' property.
+  If 'single' is true, it displays one image, otherwise it displays two.
+  */}
+  {
+    articles.map((article) => {
+      return article.isRightSection ? (
+        <RightSection
+          title={article.title}
+          subTitle={article.subTitle}
+          single={article.single}
+          imgOne={article.imgOne}
+          imgOneAlt={article.imgOneAlt}
+          imgTwo={article.imgTwo}
+          imgTwoAlt={article.imgTwoAlt}
+          btnExists={article.btnExists}
+          btnTitle={article.btnTitle}
+          btnURL={article.btnURL}
+        />
+      ) : (
+        <LeftSection
+          title={article.title}
+          subTitle={article.subTitle}
+          img={article.img}
+          imgAlt={article.imgAlt}
+          btnExists={article.btnExists}
+          btnTitle={article.btnTitle}
+          btnURL={article.btnURL}
+        />
+      );
+    })
+  }
+  
+</MainLayout>

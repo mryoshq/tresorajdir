@@ -1,0 +1,76 @@
+---
+// AboutLocations component for the locations section
+import { Image } from "astro:assets";
+
+interface LocationInfo {
+  icon: string;
+  title: string;
+  content: string[];
+}
+
+interface Props {
+  title: string;
+  subtitle: string;
+  locationTitle: string;
+  locationInfo: LocationInfo[];
+  mapImageSrc: ImageMetadata;
+  mapImageAlt: string;
+  locationName: string;
+  locationSubtitle: string;
+}
+
+const { title, subtitle, locationTitle, locationInfo, mapImageSrc, mapImageAlt, locationName, locationSubtitle } = Astro.props;
+---
+
+<section class="bg-green-50 dark:bg-green-900/10 py-16">
+  <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">
+        {title}
+      </h2>
+      <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+        {subtitle}
+      </p>
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="order-2 lg:order-1">
+        <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200 mb-4 text-center">
+          {locationTitle}
+        </h3>
+        <div class="space-y-6 text-center">
+          {locationInfo.map((info) => (
+            <div class="flex flex-col items-center">
+              <div class="w-8 h-8 text-green-600 dark:text-green-400 mb-3" set:html={info.icon}></div>
+              <div>
+                <p class="font-medium text-neutral-800 dark:text-neutral-200 mb-1">{info.title}</p>
+                {info.content.map((line) => (
+                  <p class="text-neutral-600 dark:text-neutral-400">{line}</p>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div class="order-1 lg:order-2 bg-white dark:bg-neutral-800 rounded-2xl p-2 shadow-lg">
+        <div class="w-full bg-green-100 dark:bg-green-300/20 rounded-lg flex items-center justify-center">
+          {/* Location Pin */}
+          <div class="w-full h-full flex items-center justify-center">
+            <Image 
+              src={mapImageSrc} 
+              alt={mapImageAlt} 
+              class="w-full h-full object-contain rounded-lg"
+              format="avif"
+              loading="eager"
+            />
+          </div>
+        </div>
+        <div class="mt-2 text-center">
+          <p class="text-green-700 dark:text-green-300 font-medium mb-1">{locationName}</p>
+          <p class="text-sm text-green-600 dark:text-green-400">{locationSubtitle}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,172 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { SITE } from "@data/constants";
+
+const title = "Politique des Cookies - Trésor d'Ajdir";
+const description = "Découvrez comment Trésor d'Ajdir utilise les cookies pour améliorer votre expérience de navigation et fournir du contenu personnalisé.";
+---
+
+<MainLayout title={title} customDescription={description} lang="fr">
+  <div class="bg-white dark:bg-neutral-900">
+    <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-neutral-900 dark:text-white mb-4">
+          Politique des Cookies
+        </h1>
+        <p class="text-lg text-neutral-600 dark:text-neutral-300">
+          Trésor d'Ajdir - Verger de Pommes Premium
+        </p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
+          Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
+      </div>
+
+      <!-- Content -->
+      <div class="prose prose-lg max-w-none dark:prose-invert">
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">Qu'est-ce que les Cookies ?</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Les cookies sont de petits fichiers texte qui sont placés sur votre ordinateur ou appareil mobile lorsque vous visitez notre site web. 
+            Ils sont largement utilisés pour faire fonctionner les sites web plus efficacement et pour fournir des informations aux propriétaires de sites web.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Chez Trésor d'Ajdir, nous utilisons les cookies pour améliorer votre expérience de navigation, analyser le trafic du site, et fournir 
+            du contenu personnalisé lié à nos produits de pommes premium et services de verger.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">Types de Cookies que Nous Utilisons</h2>
+          
+          <div class="mb-6">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">Cookies Essentiels</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              Ces cookies sont nécessaires au bon fonctionnement du site web. Ils permettent des fonctions de base comme la navigation 
+              entre les pages, l'accès aux zones sécurisées, et la mémorisation de vos préférences.
+            </p>
+            <ul class="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-1">
+              <li>Gestion des sessions</li>
+              <li>Fonctionnalités de sécurité</li>
+              <li>Préférences de langue</li>
+              <li>Paramètres de mode sombre/clair</li>
+            </ul>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">Cookies d'Analyse</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              Ces cookies nous aident à comprendre comment les visiteurs interagissent avec notre site web en collectant et rapportant 
+              des informations de manière anonyme.
+            </p>
+            <ul class="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-1">
+              <li>Pages vues et comportement des utilisateurs</li>
+              <li>Contenu et fonctionnalités populaires</li>
+              <li>Métriques de performance du site web</li>
+            </ul>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">Cookies Marketing</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              Ces cookies sont utilisés pour diffuser des publicités qui vous sont pertinentes et correspondent à vos intérêts. 
+              Ils peuvent également être utilisés pour limiter le nombre de fois où vous voyez une publicité.
+            </p>
+            <ul class="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-1">
+              <li>Recommandations de contenu personnalisé</li>
+              <li>Intégration des réseaux sociaux</li>
+              <li>Abonnements à la newsletter</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">Comment Nous Utilisons les Cookies</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Trésor d'Ajdir utilise les cookies pour :
+          </p>
+          <ul class="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-2">
+            <li>Mémoriser vos préférences de langue et de région</li>
+            <li>Fournir du contenu personnalisé sur nos variétés de pommes et services de verger</li>
+            <li>Analyser le trafic du site web et le comportement des utilisateurs pour améliorer nos services</li>
+            <li>Assurer la sécurité du site web et prévenir la fraude</li>
+            <li>Activer les fonctionnalités et le partage sur les réseaux sociaux</li>
+            <li>Diffuser des publicités et du contenu marketing pertinents</li>
+          </ul>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">Gestion de Vos Préférences de Cookies</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Vous avez le droit de choisir d'accepter ou de refuser les cookies. Vous pouvez contrôler et gérer les cookies 
+            de différentes manières :
+          </p>
+          
+          <div class="mb-4">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">Paramètres du Navigateur</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              La plupart des navigateurs web vous permettent de contrôler les cookies via leurs paramètres de préférences. Vous pouvez :
+            </p>
+            <ul class="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-1">
+              <li>Bloquer tous les cookies</li>
+              <li>Bloquer les cookies tiers</li>
+              <li>Supprimer les cookies existants</li>
+              <li>Définir des préférences pour des sites web spécifiques</li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="text-xl font-medium text-neutral-900 dark:text-white mb-3">Consentement aux Cookies</h3>
+            <p class="text-neutral-700 dark:text-neutral-300">
+              Lors de votre première visite sur notre site web, vous verrez une bannière de consentement aux cookies. Vous pouvez choisir d'accepter 
+              tous les cookies, de refuser les cookies non essentiels, ou de personnaliser vos préférences.
+            </p>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">Cookies Tiers</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Notre site web peut contenir des cookies de services tiers qui nous aident à fournir une meilleure fonctionnalité :
+          </p>
+          <ul class="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-2">
+            <li><strong>Google Analytics :</strong> Pour l'analyse du trafic du site web et les insights sur le comportement des utilisateurs</li>
+            <li><strong>Plateformes de Réseaux Sociaux :</strong> Pour les fonctionnalités de partage social et d'intégration</li>
+            <li><strong>Processeurs de Paiement :</strong> Pour les transactions en ligne sécurisées (si applicable)</li>
+            <li><strong>Réseaux de Distribution de Contenu :</strong> Pour un chargement et des performances plus rapides du site web</li>
+          </ul>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">Mises à Jour de Cette Politique</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Nous pouvons mettre à jour cette Politique des Cookies de temps à autre pour refléter les changements dans nos pratiques ou pour 
+            d'autres raisons opérationnelles, légales ou réglementaires. Nous vous informerons de tout changement matériel en 
+            publiant la politique mise à jour sur notre site web.
+          </p>
+          <p class="text-neutral-700 dark:text-neutral-300">
+            Nous vous encourageons à consulter cette politique périodiquement pour rester informé de la façon dont nous utilisons les cookies.
+          </p>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-neutral-900 dark:text-white mb-4">Nous Contacter</h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            Si vous avez des questions sur notre utilisation des cookies ou cette Politique des Cookies, veuillez nous contacter :
+          </p>
+          <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
+            <p class="text-neutral-700 dark:text-neutral-300 mb-2">
+              <strong>Trésor d'Ajdir</strong><br>
+              Verger de Pommes Premium<br>
+              Montagnes de l'Atlas, Maroc
+            </p>
+            <p class="text-neutral-700 dark:text-neutral-300">
+              Email : info@tresordajdir.com<br>
+              Téléphone : +212 XXX XXX XXX
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</MainLayout>

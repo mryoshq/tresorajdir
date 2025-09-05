@@ -1,0 +1,18 @@
+---
+// ContactPageHeader component for the contact page header section
+import MainSection from "@components/ui/blocks/MainSection.astro";
+import mozaicglass from "@images/mozaicglass.jpg";
+
+interface Props {
+  title: string;
+  subtitle: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<MainSection
+  title={title}
+  subTitle={subtitle}
+  backgroundImage={mozaicglass}
+/>

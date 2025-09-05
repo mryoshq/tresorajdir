@@ -1,0 +1,94 @@
+---
+// Import the necessary components
+import MainLayout from "@/layouts/MainLayout.astro";
+import HeroSection from "@components/sections/landing/HeroSection.astro";
+import HeroSectionAlt from "@components/sections/landing/HeroSectionAlt.astro";
+import ClientsSection from "@components/sections/landing/ClientsSection.astro";
+import FeaturesGeneral from "@components/sections/features/FeaturesGeneral.astro";
+import TestimonialsSection from "@components/sections/testimonials/TestimonialsSection.astro";
+import FAQ from "@components/sections/misc/FAQ.astro";
+import MissionSection from "@components/sections/misc/MissionSection.astro";
+import heroApple from '@images/tresor-hero.png'
+
+import faqs from "@data/fr/faqs.json";
+import features from "@data/fr/features.json";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { partnersData } from "@/data_files/constants";
+
+import PeekCarousel from '@components/sections/landing/PeekCarousel.astro';
+import slide1 from "@images/slide1.jpg"
+import slide2 from "@images/slide2.jpg"
+import slide3 from "@images/slide3.jpg"
+
+
+---
+
+<MainLayout>
+
+  <HeroSection
+    title=`Les Meilleures  <span class="text-red-500 dark:text-red-700">Pommes</span> du Verger <span class="text-green-500 dark:text-green-400"> AJDIR</span>`
+    subTitle="Une dégustation des plus fines pommes des montagnes de l'Atlas marocain"
+    primaryBtn="Explorer Nos Pommes"
+    primaryBtnURL="/orchard"
+    secondaryBtn="Contacter Notre Ferme"
+    secondaryBtnURL="/contact"
+    src={heroApple}
+    alt="Pommes fraîches du verger AJDIR dans un bel emballage"
+  />
+
+  <ClientsSection
+    title="Faites confiance aux leaders de l'industrie alimentaire"
+    subTitle="Découvrez la qualité choisie par les meilleurs restaurants et épiceries."
+    partners={partnersData}
+  />
+  <MissionSection
+    title="TRÉSORS D'AJDIR"
+    mission="Depuis 2017, nous nous consacrons à la culture des plus fines pommes dans les montagnes de l'Atlas marocain, combinant la sagesse agricole traditionnelle avec des pratiques durables. Notre mission est de livrer des pommes d'une qualité exceptionnelle qui non seulement satisfont le palais mais respectent aussi l'environnement et soutiennent les communautés locales. Nous croyons en la création d'un pont entre les richesses de la nature et votre table, assurant que chaque pomme raconte une histoire de soin, de qualité et d'engagement envers l'excellence."
+  />
+  
+  <!-- Peek Carousel -->
+  <PeekCarousel 
+  images={[slide1, slide2, slide3]} 
+  title="Pommes d’exception, art vivant "
+  />
+
+  <!-- mission and vision -->
+  
+
+  <!-- Testimonials -->
+  <TestimonialsSection
+  title="Du Verger à Votre Table"
+  subTitle="Découvrez le goût de la nature redéfini."
+  testimonials={[
+    {
+      content:
+        "Les pommes AJDIR sont absolument délicieuses ! La fraîcheur et la qualité sont inégalées. Nos clients les adorent, et le service de livraison est incroyablement fiable. Vraiment les meilleures pommes que nous ayons jamais servies !",
+     },
+    ]}  
+  />
+
+  
+  <FeaturesGeneral
+    title="Répondre aux exigences du marché"
+    subTitle="Chez le Verger AJDIR, nous relevons les défis uniques de la culture durable de pommes. De la culture biologique à la récolte experte, nous nous engageons à fournir les pommes les plus fraîches et de la plus haute qualité pour votre table."
+    imageTitle="Des pommes taillées à la PERFECTION"
+    features={features}
+  />
+
+
+  <!-- Bottom -->
+
+  <!-- FAQ -->
+  <FAQ title="Questions<br />fréquemment posées" faqs={faqs} />
+
+  <!-- Hero Section Alt -->
+  <HeroSectionAlt
+    title="Goûtez la Différence"
+    subTitle="Le Verger AJDIR est une ferme familiale, cultivant méticuleusement les plus fines pommes en utilisant des pratiques durables et la sagesse traditionnelle."
+    url="#"
+  />
+
+  
+
+
+</MainLayout>

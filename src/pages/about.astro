@@ -1,0 +1,36 @@
+---
+// Import necessary components
+import mapImage from "@images/map.png";
+import { AboutPageLayout, AboutPageHeader, AboutHero, AboutBenefits, AboutTimeline, AboutTeam, AboutVisualIdentity, AboutCTA, AboutFoundingStory, AboutLocations } from "@components/sections/about";
+import { aboutFrData } from "@data/about-fr";
+---
+
+<AboutPageLayout {...aboutFrData.pageLayout}>
+  {/* Page Header Section */}
+  <AboutPageHeader {...aboutFrData.pageHeader} />
+  
+  {/* About Section - Detailed information about the farm's history, mission, and core values */}
+  <AboutHero {...aboutFrData.hero} />
+
+  {/* Benefits Section - Highlight unique benefits */}
+  <AboutBenefits {...aboutFrData.benefits} />
+
+  {/* Timeline Section - Key milestones and events */}
+  <AboutTimeline {...aboutFrData.timeline} />
+
+  {/* Founding Story Section */}
+  <AboutFoundingStory {...aboutFrData.foundingStory} />
+
+  {/* Team Section - Key team members */}
+  <AboutTeam {...aboutFrData.team} />
+
+  {/* Visual Identity Section - Logo and values */}
+  <AboutVisualIdentity {...aboutFrData.visualIdentity} />
+
+  {/* Locations Section - Farm location with map */}
+  <AboutLocations {...aboutFrData.locations} mapImageSrc={mapImage} />
+
+  {/* CTA Section - Encourage visitors to learn more */}
+  <AboutCTA {...aboutFrData.cta} />
+
+</AboutPageLayout>
