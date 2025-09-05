@@ -54,7 +54,7 @@ export const contactFrData = {
       content: "Explorez notre FAQ pour des réponses rapides et claires aux questions courantes.",
       isLinkVisible: true,
       linkTitle: "Visiter la FAQ",
-      linkURL: "/fr/#faq",
+      linkURL: "/#faq",
       isArrowVisible: true,
       lang: "fr",
       iconName: "chatBubble"

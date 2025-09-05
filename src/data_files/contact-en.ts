@@ -54,7 +54,7 @@ export const contactEnData = {
       content: "Explore our FAQ for quick, clear answers to common queries.",
       isLinkVisible: true,
       linkTitle: "Visit FAQ",
-      linkURL: "/#faq",
+      linkURL: "/en/#faq",
       isArrowVisible: true,
       lang: "en",
       iconName: "chatBubble"

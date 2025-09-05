@@ -12,7 +12,6 @@ import heroApple from '@images/tresor-hero.png'
 
 import faqs from "@data/fr/faqs.json";
 import features from "@data/fr/features.json";
-import { partnersData } from "@/data_files/constants";
 
 import PeekCarousel from '@components/sections/landing/PeekCarousel.astro';
 import slide1 from "@images/slide2.jpg"
@@ -38,11 +37,7 @@ import slide6 from "@images/slide1.jpg"
     alt="Pommes fraîches du verger AJDIR dans un bel emballage"
   />
 
-  <ClientsSection
-    title="Faites confiance aux leaders de l'industrie alimentaire"
-    subTitle="Découvrez la qualité choisie par les meilleurs restaurants et épiceries."
-    partners={partnersData}
-  />
+  <ClientsSection />
   <MissionSection
     title="TRÉSORS D'AJDIR"
     mission="Depuis 2017, nous nous consacrons à la culture des plus fines pommes dans les montagnes de l'Atlas marocain, combinant la sagesse agricole traditionnelle avec des pratiques durables. Notre mission est de livrer des pommes d'une qualité exceptionnelle qui non seulement satisfont le palais mais respectent aussi l'environnement et soutiennent les communautés locales. Nous croyons en la création d'un pont entre les richesses de la nature et votre table, assurant que chaque pomme raconte une histoire de soin, de qualité et d'engagement envers l'excellence."

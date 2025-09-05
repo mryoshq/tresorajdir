@@ -12,7 +12,6 @@ import MissionSection from "@components/sections/misc/MissionSection.astro";
 import faqs from "@data/faqs.json";
 import features from "@data/features.json";
 
-import { partnersData } from "@/data_files/constants";
 import heroApple from '@images/tresor-hero.png'
 
 import slide1 from "@images/slide2.jpg"
@@ -38,9 +37,7 @@ import slide6 from "@images/slide1.jpg"
     alt="Fresh apples from AJDIR orchard in beautiful packaging"
   />
 
-  <ClientsSection
-    partners={partnersData}
-  />
+  <ClientsSection />
   <!-- mission and vision -->
   <MissionSection
     title="AJDIR TREASURES"

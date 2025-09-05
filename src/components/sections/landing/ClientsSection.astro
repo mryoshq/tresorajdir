@@ -1,63 +1,52 @@
 ---
-const { partners } = Astro.props;
+import { Image } from "astro:assets";
+// Import marquee partner images
+import adaLogo from "@images/marquee/ADA.png";
+import agriLogo from "@images/marquee/agri.png";
+import marocFoodexLogo from "@images/marquee/maroc foodex_0.png";
+import nazelecLogo from "@images/marquee/nazelec_logo (1).png";
+import oncaLogo from "@images/marquee/ONCA.png";
+import onssaLogo from "@images/marquee/ONSSA.png";
 
 interface Partner {
-  icon: any;
-  name?: string;
+  image: any;
+  name: string;
   href?: string;
 }
 
-const marqueeElements = partners.length;
+const partners = [
+  { image: adaLogo, name: "ADA", href: "#" },
+  { image: agriLogo, name: "Agri", href: "#" },
+  { image: marocFoodexLogo, name: "Maroc Foodex", href: "#" },
+  { image: nazelecLogo, name: "Nazelec", href: "#" },
+  { image: oncaLogo, name: "ONCA", href: "#" },
+  { image: onssaLogo, name: "ONSSA", href: "#" },
+];
 
-// increase the repeat count if your icons are narrow
-const repeatedPartners = Array(3).fill(partners).flat();
+// Use original partners array without duplication
+const displayedPartners = partners;
 ---
 
 <section
-  class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full border-y-4 border-green-700/20 dark:border-green-200/40 overflow-x-hidden"
+  class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8 2xl:max-w-full border-y-4 border-green-700/20 dark:border-green-200/40 overflow-x-hidden"
 >
 
-  <div
-    class="marquee"
-    style={`--marquee-elements:${marqueeElements};
-            --marquee-element-width-responsive:calc(7.5rem / var(--marquee-elements) * 5);
-            --marquee-element-width:calc(11.25rem / var(--marquee-elements) * 5);
-            --marquee-duration:20s;
-            --marquee-reverse:;
-            --marquee-width:100%;`}
-  >
-    <div class="marquee-content flex items-center">
-      {repeatedPartners.map((partner: Partner, index) => (
-        <div
-          class="min-w-[var(--marquee-element-width-responsive)] px-0 md:min-w-[var(--marquee-element-width)] md:px-4"
-          aria-hidden={index >= partners.length}
-        >
-          <a href={partner.href} target="_blank" rel="noopener noreferrer">
-            <div class="px-4" set:html={partner.icon} />
-          </a>
-        </div>
+  <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center gap-8 md:gap-12 lg:gap-16">
+      {displayedPartners.map((partner: Partner) => (
+        <a href={partner.href} target="_blank" rel="noopener noreferrer">
+          <div class="flex items-center justify-center">
+            <Image 
+              src={partner.image} 
+              alt={partner.name}
+              width={120}
+              height={80}
+              class="h-20 w-auto py-1 sm:h-24 md:h-28 lg:h-32 lg:py-2 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+            />
+          </div>
+        </a>
       ))}
     </div>
   </div>
 </section>
 
-<style>
-  .marquee {
-    width: var(--marquee-width);
-    margin-inline: auto;
-    overflow-x: hidden;
-    max-width: 100vw;
-  }
-  .marquee-content {
-    animation: marquee var(--marquee-duration) linear infinite;
-    overflow-x: hidden;
-  }
-  @keyframes marquee {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-</style>
