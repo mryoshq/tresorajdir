@@ -31,6 +31,7 @@ const ogTitle = `${post.data.title} | Insights | ${SITE.title}`;
 
 <MainLayout
   title={pageTitle}
+  lang="en"
   customDescription={metaDescription}
   customOgTitle={ogTitle}
   structuredData={{
@@ -53,7 +54,7 @@ const ogTitle = `${post.data.title} | Insights | ${SITE.title}`;
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://TresorAjdir.com/insights/${post.id.replace(/^en\//, "")}`,
+      "@id": `https://TresorAjdir.com/en/insights/${post.id.replace(/^en\//, "")}`,
     },
   }}
 >
