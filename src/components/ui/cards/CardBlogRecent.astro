@@ -126,7 +126,7 @@ const characters = splitTextIntelligently(titleText);
       // Animate each character sequentially with faster timing
       // Group punctuation with previous character
       let currentDelay = 0;
-      titleChars.forEach((char, index) => {
+      titleChars.forEach((char) => {
         const shouldGroupWithPrevious = char.getAttribute('data-group') === 'true';
         
         // If this character should be grouped with the previous, use the same delay
