@@ -4,11 +4,16 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
 
-const { blogEntry, recentBlogLocale = "" } = Astro.props;
+const { 
+  blogEntry, 
+  recentBlogLocale = "",
+  label = Astro.currentLocale === "fr" ? "Lire plus" : "Read More"
+} = Astro.props;
 
 interface Props {
   blogEntry: CollectionEntry<"blog">;
   recentBlogLocale?: string;
+  label?: string;
 }
 
 // Split the description text into words and punctuation groups for animation
@@ -60,7 +65,7 @@ const characters = splitTextIntelligently(titleText);
     >
       <a
         class="outline-hidden ring-zinc-500 transition duration-300 hover:text-red-500 focus-visible:ring-3 dark:text-neutral-300 dark:ring-zinc-200 dark:hover:text-neutral-50 dark:focus:outline-hidden"
-        href={recentBlogLocale && recentBlogLocale !== "en" ? `/${recentBlogLocale}/blog/${blogEntry.id.replace(/^fr\//, '')}/` : `/blog/${blogEntry.id.replace(/^en\//, '')}/`}
+        href={recentBlogLocale && recentBlogLocale === "en" ? `/en/blog/${blogEntry.id.replace(/^en\//, '')}/` : `/blog/${blogEntry.id.replace(/^fr\//, '')}/`}
       >
         <span class="animated-title">
           {characters.map(({ char, index, groupWithPrevious }: { char: string; index: number; groupWithPrevious: boolean }) => (
@@ -74,7 +79,7 @@ const characters = splitTextIntelligently(titleText);
     <div class="mt-5 flex justify-center">
       <PrimaryCTA
         url={recentBlogLocale && recentBlogLocale !== "en" ? `/${recentBlogLocale}/blog/${blogEntry.id.replace(/^fr\//, '')}/` : `/blog/${blogEntry.id.replace(/^en\//, '')}/`}
-        title="Read More"
+        title={label}
         data-astro-prefetch
       />
     </div>

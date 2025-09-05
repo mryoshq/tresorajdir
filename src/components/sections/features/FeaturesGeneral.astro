@@ -128,7 +128,6 @@ const { title, subTitle, imageTitle, features } = Astro.props;
   
   // Function to initialize the scroll animations
   function initScrollAnimations() {
-    console.log('FeaturesGeneral script loaded');
     
     const image1 = document.getElementById('image-1');
     const image2 = document.getElementById('image-2');
@@ -139,9 +138,6 @@ const { title, subTitle, imageTitle, features } = Astro.props;
       console.error('Some elements not found:', { image1, image2, image3, section });
       return;
     }
-    
-    console.log('All elements found, setting up GSAP');
-    
     // Set initial states
     gsap.set(image1, { opacity: 1 });
     gsap.set(image2, { opacity: 0 });
@@ -156,18 +152,6 @@ const { title, subTitle, imageTitle, features } = Astro.props;
         scrub: 0.5, // Smooth scrubbing effect
         pin: true, // Pin the entire section while scrolling
         pinSpacing: true,
-        onEnter: () => {
-          console.log('Entering pinned section');
-        },
-        onLeave: () => {
-          console.log('Leaving pinned section');
-        },
-        onEnterBack: () => {
-          console.log('Entering back pinned section');
-        },
-        onLeaveBack: () => {
-          console.log('Leaving back pinned section');
-        }
       }
     });
     
@@ -189,9 +173,6 @@ tl.to(image1, { opacity: 0, duration: 0.3, ease: "power1.out" }, 0)
       ease: "power2.inOut" 
     }, 0.4);                      // overlaps quickly with image2
 
-    
-    console.log('GSAP timeline created');
-    
     return tl;
   }
   

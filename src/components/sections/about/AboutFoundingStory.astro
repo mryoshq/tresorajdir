@@ -1,13 +1,16 @@
 ---
+// Import the necessary modules
+import { Image } from "astro:assets";
+
 // AboutFoundingStory component for the founding story section
 interface Props {
   title: string;
   description1: string;
   description2: string;
   description3: string;
-  imageSrc: string;
+  imageSrc: any;
   imageAlt: string;
-}
+} 
 
 const { title, description1, description2, description3, imageSrc, imageAlt } = Astro.props;
 ---
@@ -16,10 +19,12 @@ const { title, description1, description2, description3, imageSrc, imageAlt } = 
   <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div class="order-2 lg:order-1">
-        <img 
+        <Image 
           src={imageSrc} 
           alt={imageAlt} 
           class="rounded-2xl shadow-2xl"
+          draggable="false"
+          format="avif"
         />
       </div>
       <div class="order-1 lg:order-2">

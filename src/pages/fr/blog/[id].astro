@@ -1,0 +1,29 @@
+---
+// Redirect from old French blog URLs to new structure
+export async function getStaticPaths() {
+  // Get all French blog entries
+  const { getCollection } = await import("astro:content");
+  const blogEntries = await getCollection("blog", ({ id }) =>
+    id.startsWith("fr/")
+  );
+  
+  return blogEntries.map((blog) => {
+    const idWithoutLang = blog.id.replace(/^fr\//, "");
+    return {
+      params: { id: idWithoutLang },
+      props: { redirectTo: `/blog/${idWithoutLang}` },
+    };
+  });
+}
+
+const { redirectTo } = Astro.props;
+---
+
+<script define:vars={{ redirectTo }}>
+  // Redirect to the new URL structure
+  window.location.replace(redirectTo);
+</script>
+
+<!-- Fallback for users with JavaScript disabled -->
+<meta http-equiv="refresh" content="0; url={redirectTo}" />
+<p>Redirecting to <a href={redirectTo}>{redirectTo}</a>...</p>

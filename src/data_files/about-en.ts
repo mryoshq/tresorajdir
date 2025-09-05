@@ -1,4 +1,6 @@
 import { SITE } from "./constants";
+import applebasket from "@images/applebasket.jpg";
+import emblemlogo from "@images/emblemlogo.png";
 
 export const aboutEnData = {
   pageLayout: {
@@ -144,7 +146,7 @@ export const aboutEnData = {
         description: "The overall design draws inspiration from traditional Moroccan geometric patterns and Islamic art, celebrating our cultural identity. The root system represents our deep connection to this land and our ancestors who first cultivated these soils, symbolizing tradition, heritage, and the foundation of our values."
       }
     ],
-    logoImageSrc: "/src/images/emblemlogo.png",
+    logoImageSrc: emblemlogo,
     logoImageAlt: "Trésor d'Ajdir Logo"
   },
 
@@ -153,7 +155,7 @@ export const aboutEnData = {
     description1: "\"Trésor d'Ajdir\" translates to \"Treasure of Ajdir\" - a name that perfectly captures our philosophy. Ajdir, our beloved hometown, is not just a location; it's the heart of our operation and the source of our inspiration.",
     description2: "Our founder, inspired by the rich agricultural heritage of the region and the natural beauty of the landscape, envisioned an orchard that would become a treasure not just for our family, but for the entire community. This vision continues to guide every decision we make today.",
     description3: "The name also reflects our commitment to treating each apple tree as a precious resource, nurturing it with care and respect to produce the finest fruits nature can offer.",
-    imageSrc: "/src/images/applebasket.jpg",
+    imageSrc: applebasket,
     imageAlt: "Our Founding Story"
   },
 

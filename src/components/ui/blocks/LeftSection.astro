@@ -44,6 +44,10 @@ interface Props {
       {subTitle}
     </p>
     <!-- Conditionally render the Primary CTA button if btnExists is true -->
-    {btnExists ? <PrimaryCTA title={btnTitle} url={btnURL} /> : null}
+    {btnExists ? (
+      <div class="flex justify-center">
+        <PrimaryCTA title={btnTitle} url={btnURL} />
+      </div>
+    ) : null}
   </div>
 </section>

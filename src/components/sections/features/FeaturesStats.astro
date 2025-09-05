@@ -110,7 +110,6 @@ type Stat = {
   
   // Function to initialize the stats animations
   function initStatsAnimations() {
-    console.log('FeaturesStats script loaded');
     
     const statsSection = document.getElementById('stats-section');
     const mainStat = document.getElementById('main-stat');
@@ -123,8 +122,6 @@ type Stat = {
     // Get all stat elements
     const statElements = document.querySelectorAll('[id^="stat-"]');
     const allStats = [mainStat, ...statElements];
-    
-    console.log('Found stats elements:', allStats.length);
     
     // Create timeline for stats animation
     const tl = gsap.timeline({
@@ -204,7 +201,6 @@ type Stat = {
       }
     });
     
-    console.log('Stats counter animation timeline created');
     
     return tl;
   }

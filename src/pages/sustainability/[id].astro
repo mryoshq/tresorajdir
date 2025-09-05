@@ -22,7 +22,7 @@ export async function getStaticPaths() {
   return sustainabilityEntries.map((sustainability) => {
     const idWithoutLang = sustainability.id.replace(/^fr\//, ""); // Remove the "fr/" prefix
     return {
-      params: { lang: "fr", id: idWithoutLang },
+      params: { id: idWithoutLang },
       props: { sustainability },
     };
   });
@@ -37,13 +37,12 @@ const ogTitle = `${sustainability.data.title} | Durabilité | tresorajdir`;
 
 <MainLayout
   title={pageTitle}
-  lang="fr"
   customDescription={metaDescription}
   customOgTitle={ogTitle}
   structuredData={{
     "@context": "https://schema.org",
     "@type": "Product",
-    "@id": `https://tresorajdir.com/fr/sustainability/${sustainability.data.title.toLowerCase().replace(/\s+/g, "-")}`,
+    "@id": `https://tresorajdir.com/sustainability/${sustainability.data.title.toLowerCase().replace(/\s+/g, "-")}`,
     name: sustainability.data.title,
     description: sustainability.data.description,
     brand: {

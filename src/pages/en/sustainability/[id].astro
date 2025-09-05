@@ -39,12 +39,13 @@ const ogTitle = `${sustainability.data.title} | Sustainability | tresorajdir`;
 
 <MainLayout
   title={pageTitle}
+  lang="en"
   customDescription={metaDescription}
   customOgTitle={ogTitle}
   structuredData={{
     "@context": "https://schema.org",
     "@type": "Product",
-    "@id": `https://tresorajdir.com/sustainability/${sustainability.data.title.toLowerCase().replace(/\s+/g, "-")}`,
+    "@id": `https://tresorajdir.com/en/sustainability/${sustainability.data.title.toLowerCase().replace(/\s+/g, "-")}`,
     name: sustainability.data.title,
     description: sustainability.data.description,
     brand: {

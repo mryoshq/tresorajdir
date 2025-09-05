@@ -1,4 +1,6 @@
 import { SITE } from "./constants";
+import applebasket from "@images/applebasket.jpg";
+import emblemlogo from "@images/emblemlogo.png";
 
 export const aboutFrData = {
   pageLayout: {
@@ -108,7 +110,7 @@ export const aboutFrData = {
     description1: "\"Trésor d'Ajdir\" se traduit par \"Trésor d'Ajdir\" - un nom qui capture parfaitement notre philosophie. Ajdir, notre ville natale bien-aimée, n'est pas seulement un emplacement ; c'est le cœur de notre opération et la source de notre inspiration.",
     description2: "Notre fondateur, inspiré par le riche patrimoine agricole de la région et la beauté naturelle du paysage, a imaginé un verger qui deviendrait un trésor non seulement pour notre famille, mais pour toute la communauté. Cette vision continue de guider chaque décision que nous prenons aujourd'hui.",
     description3: "Le nom reflète aussi notre engagement à traiter chaque pommier comme une ressource précieuse, en le nourrissant avec soin et respect pour produire les meilleurs fruits que la nature puisse offrir.",
-    imageSrc: "/src/images/applebasket.jpg",
+    imageSrc: applebasket,
     imageAlt: "Notre Histoire de Fondation"
   },
 
@@ -153,7 +155,7 @@ export const aboutFrData = {
         description: "Le design global s'inspire des motifs géométriques marocains traditionnels et de l'art islamique, célébrant notre identité culturelle. Le système racinaire représente notre lien profond avec cette terre et nos ancêtres qui ont d'abord cultivé ces sols, symbolisant la tradition, l'héritage et la fondation de nos valeurs."
       }
     ],
-    logoImageSrc: "/src/images/emblemlogo.png",
+    logoImageSrc: emblemlogo,
     logoImageAlt: "Logo Trésor d'Ajdir"
   },
 

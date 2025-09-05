@@ -64,7 +64,6 @@ interface Props {
   
   // Function to initialize the main section animations
   function initMainSectionAnimations() {
-    console.log('MainSection script loaded');
     
     const section = document.getElementById('main-section');
     const overlay = document.getElementById('main-section-overlay');
@@ -73,7 +72,6 @@ interface Props {
     const button = document.getElementById('main-section-button');
     
     if (!section) {
-      console.log('MainSection not found or no background image');
       return;
     }
     
@@ -137,7 +135,6 @@ interface Props {
       }, 0);
     }
     
-    console.log('MainSection animation timeline created');
     
     return tl;
   }

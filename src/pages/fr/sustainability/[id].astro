@@ -1,0 +1,29 @@
+---
+// Redirect from old French sustainability URLs to new structure
+export async function getStaticPaths() {
+  // Get all French sustainability entries
+  const { getCollection } = await import("astro:content");
+  const sustainabilityEntries = await getCollection("sustainability", ({ id }) =>
+    id.startsWith("fr/")
+  );
+  
+  return sustainabilityEntries.map((sustainability) => {
+    const idWithoutLang = sustainability.id.replace(/^fr\//, "");
+    return {
+      params: { id: idWithoutLang },
+      props: { redirectTo: `/sustainability/${idWithoutLang}` },
+    };
+  });
+}
+
+const { redirectTo } = Astro.props;
+---
+
+<script define:vars={{ redirectTo }}>
+  // Redirect to the new URL structure
+  window.location.replace(redirectTo);
+</script>
+
+<!-- Fallback for users with JavaScript disabled -->
+<meta http-equiv="refresh" content="0; url={redirectTo}" />
+<p>Redirecting to <a href={redirectTo}>{redirectTo}</a>...</p>

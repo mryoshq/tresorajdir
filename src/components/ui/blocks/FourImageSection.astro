@@ -84,8 +84,6 @@ interface Props {
   
   // Function to initialize the four image animations
   function initFourImageAnimations() {
-    console.log('FourImageSection script loaded');
-    
     const section = document.getElementById('four-image-section');
     const images = [
       document.getElementById('four-img-1'),
@@ -101,8 +99,6 @@ interface Props {
     
     // Filter out null elements (like the 4th image on mobile)
     const validImages = images.filter(img => img !== null);
-    
-    console.log('Found valid images:', validImages.length);
     
     // Set initial state - images start slightly below their final position
     gsap.set(validImages, { 
@@ -128,8 +124,6 @@ interface Props {
       ease: "power2.out",
       stagger: 0.15 // Stagger each image by 0.15 seconds
     });
-    
-    console.log('Four image vertical animation timeline created');
     
     return tl;
   }

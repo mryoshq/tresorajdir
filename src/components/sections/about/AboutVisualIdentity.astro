@@ -1,4 +1,7 @@
 ---
+// Import the necessary modules
+import { Image } from "astro:assets";
+
 // AboutVisualIdentity component for the visual identity section
 interface ValueElement {
   title: string;
@@ -11,10 +14,10 @@ interface Props {
   logoStoryTitle: string;
   logoStoryDescription: string;
   valueElements: ValueElement[];
-  logoImageSrc: string;
+  logoImageSrc: any;
   logoImageAlt: string;
 }
-
+ 
 const { title, subtitle, logoStoryTitle, logoStoryDescription, valueElements, logoImageSrc, logoImageAlt } = Astro.props;
 ---
 
@@ -32,10 +35,12 @@ const { title, subtitle, logoStoryTitle, logoStoryDescription, valueElements, lo
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div class="text-center">
         <div class="mb-8">
-          <img 
+          <Image 
             src={logoImageSrc} 
             alt={logoImageAlt} 
             class="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 mx-auto object-contain"
+            draggable="false"
+            format="avif"
           />
         </div>
         <h3 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-200 mb-4">

@@ -47,7 +47,11 @@ interface Props {
       {subTitle}
     </p>
     <!-- Conditional rendering of the Primary Call-To-Action button if 'btnExists' is true -->
-    {btnExists ? <PrimaryCTA title={btnTitle} url={btnURL} /> : null}
+    {btnExists ? (
+      <div class="flex justify-center">
+        <PrimaryCTA title={btnTitle} url={btnURL} />
+      </div>
+    ) : null}
   </div>
   <!-- Conditionally render one or two images based on 'single' property -->
   {
