@@ -3,14 +3,12 @@ import TestimonialItem from "./TestimonialItem.astro";
 
 const {
   title,
-  subTitle,
   testimonials,
   
 } = Astro.props;
 
 interface Props {
   title: string;
-  subTitle?: string;
   testimonials?: Testimonial[];
   
 }
@@ -24,9 +22,8 @@ type Testimonial = {
 
 ---
 
-<section
-  class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full relative overflow-hidden overflow-x-hidden"
->
+<section class="relative mx-auto max-w-[95rem] overflow-x-hidden py-16">
+
   <!-- Light Mode: Particles -->
   <div class='absolute inset-0 block dark:hidden'>
     <div id='particles1-testimonials' class='absolute inset-0'></div>
@@ -40,15 +37,15 @@ type Testimonial = {
     <div id='stars2-testimonials' class='absolute inset-0'></div>
     <div id='stars3-testimonials' class='absolute inset-0'></div>
   </div>
-    <!-- Title and Subtitle - Centered -->
-  <div class="mb-12 text-center">
-    <h2 class="mb-4 text-3xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-4xl">
+    <!-- Title and Subtitle -->
+  <div class="mb-12 ml-[5%] md:ml-0">
+    <h2 class="mb-4 text-3xl font-bold text-neutral-800 dark:text-neutral-200 lg:text-4xl"
+    style="font-family: 'Limelight', cursive;">
       {title}
     </h2>
   </div>
-
   <!-- Testimonials Section - Two-thirds width on large screens -->
-  <div class="mx-auto max-w-4xl lg:max-w-5xl">
+  <div class=" mx-auto max-w-4xl text-center">
     { testimonials &&
       testimonials.map((testimonial) => (
         <TestimonialItem
@@ -56,11 +53,7 @@ type Testimonial = {
         />
       ))
     }
-    {subTitle &&
-     <p class="mb-4 text-xl text-neutral-600 dark:text-neutral-400 text-center">
-       {subTitle}
-     </p>
-   }
+
   </div>
 
   <script is:inline>

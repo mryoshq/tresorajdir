@@ -7,6 +7,16 @@ Disallow:
 Allow: /
 Crawl-delay: 10
 
+User-agent: bingbot
+Disallow:
+Allow: /
+Crawl-delay: 10
+
+User-agent: DuckDuckBot
+Disallow:
+Allow: /
+Crawl-delay: 2
+
 User-agent: Yandex
 Disallow:
 Allow: /

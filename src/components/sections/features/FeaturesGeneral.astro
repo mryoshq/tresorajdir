@@ -33,12 +33,14 @@ const { title, subTitle, imageTitle, features } = Astro.props;
     <!-- Image Title -->
     {imageTitle && (
       <div class="mb-6 text-center">
-        <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200 md:text-4xl lg:text-5xl">
+        <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200 md:text-4xl lg:text-5xl"
+         style="font-family: 'Limelight', cursive;"
+         >
           {imageTitle}
         </h2>
       </div>
     )}
-    
+
     <!-- Image Container with Scroll-triggered transitions -->
     <div
       class="w-full rounded-2xl"

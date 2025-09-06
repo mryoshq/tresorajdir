@@ -144,6 +144,11 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
+  /* Set Roboto as the default font family for the entire website */
+  html, body {
+    font-family: 'Roboto', sans-serif;
+  }
 }
 
 /* Animation styles for particles and stars */

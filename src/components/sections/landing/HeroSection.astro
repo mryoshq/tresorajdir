@@ -31,7 +31,7 @@ interface Props {
 
 <!-- Defining a grid container that holds all the content -->
 <section
-  class="mx-auto grid max-w-[85rem] gap-4 px-4 py-14 sm:px-6 md:grid-cols-2 md:items-center md:gap-8 lg:px-8 2xl:max-w-full relative overflow-hidden overflow-x-hidden" style="height: 100vh;">
+  class="mx-auto grid max-w-[85rem] gap-4 px-4 py-14 sm:px-6 md:grid-cols-2 md:items-center md:gap-8 lg:px-8 2xl:max-w-full relative overflow-hidden overflow-x-hidden hero-grid" style="height: 100vh;">
   
   <!-- Light Mode: Particles -->
   <div class='absolute inset-0 block dark:hidden'>
@@ -85,7 +85,7 @@ interface Props {
   </svg>
 
   <!-- Title and description -->
-  <div class="relative z-10 order-2 md:order-1">
+  <div class="relative z-10 hero-content">
     <!-- Each h1 and p tag renders a portion of the title and subTitle defined above -->
     <h1
       class="block text-balance text-3xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 sm:text-4xl lg:text-6xl lg:leading-tight"
@@ -115,7 +115,7 @@ interface Props {
   
   <!-- Hero Image Section -->
   {src && alt && (
-    <div class="flex w-full relative z-10 order-1 md:order-2">
+    <div class="flex w-full relative z-10 hero-image">
       <div class="top-12 overflow-hidden">
         <Image
           src={src}
@@ -365,3 +365,29 @@ interface Props {
     document.addEventListener('astro:after-swap', initHeroBG);
   </script>
 </section>
+
+<style>
+  /* CSS Grid solution to avoid layout shifts */
+  .hero-grid {
+    /* Mobile: single column, image first, then content */
+    grid-template-areas: 
+      "image"
+      "content";
+  }
+  
+  .hero-content {
+    grid-area: content;
+  }
+  
+  .hero-image {
+    grid-area: image;
+  }
+  
+  /* Desktop: two columns, content first, then image */
+  @media (min-width: 768px) {
+    .hero-grid {
+      grid-template-areas: 
+        "content image";
+    }
+  }
+</style>
