@@ -19,11 +19,11 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
 <!-- Main header component with shrink-on-scroll functionality -->
 <header
   id="main-header"
-  class="fixed inset-x-0 top-0 z-50 w-full transition-all duration-300 hero-header"
+  class="fixed inset-x-0 top-0 z-50 w-full transition-all duration-300 hero-header backdrop-blur-lg"
 >
   <!-- Navigation container -->
   <nav
-    class="relative w-full px-4 py-3 backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-2 lg:px-8 hero-navbar"
+    class="relative w-full px-4 py-3 md:flex md:items-center md:justify-between md:px-6 md:py-2 lg:px-8 hero-navbar"
     aria-label="Global"
   >
     <!-- Desktop Layout: Centered logo with links grouped around it -->
@@ -160,9 +160,12 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
     
     if (!header || !nav || !logo) return;
 
-    // Set initial background color
-    const normalOpacity = 0.6;
-    nav.style.backgroundColor = `rgba(220, 252, 231, ${normalOpacity})`;
+    // Set initial background color based on theme
+    const normalOpacity = 0.85;
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const lightBgColor = `rgba(220, 252, 231, ${normalOpacity})`; // green-100
+    const darkBgColor = `rgba(20, 83, 45, ${normalOpacity})`; // green-900
+    nav.style.backgroundColor = isDarkMode ? darkBgColor : lightBgColor;
 
     const scrollThreshold = 10; // Distance before shrinking starts
     const shrinkThreshold = 20; // Distance for full shrink effect
@@ -184,20 +187,23 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
         // Add border bottom with goldenbrown-400 color when shrinking
         nav.style.borderBottom = shrinkProgress > 0.3 ? '1px solid #d97706' : 'none';
         
-        // Dynamic opacity: 60% normal, 30% when shrunk
-        const normalOpacity = 0.8; // Normal state opacity
-        const shrunkOpacity = 0.6; // Shrunk state opacity
+        // Dynamic opacity: 95% normal, 80% when shrunk for better readability
+        const normalOpacity = 0.95; // Normal state opacity
+        const shrunkOpacity = 0.8; // Shrunk state opacity
         const currentOpacity = normalOpacity - (shrinkProgress * (normalOpacity - shrunkOpacity));
         
-        // Use same base green-100 color with dynamic opacity
-        nav.style.backgroundColor = `rgba(220, 252, 231, ${currentOpacity})`;
+        // Use theme-based colors with dynamic opacity
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        const lightBgColor = `rgba(220, 252, 231, ${currentOpacity})`; // green-100
+        const darkBgColor = `rgba(20, 83, 45, ${currentOpacity})`; // green-900
+        nav.style.backgroundColor = isDarkMode ? darkBgColor : lightBgColor;
         
         // Add shadow for better visibility when shrunk
         nav.style.boxShadow = shrinkProgress > 0.5 ? '0 2px 10px rgba(0,0,0,0.1)' : 'none';
         
-        // Shrink nav links more dramatically
+        // Shrink nav links more conservatively for better readability
         navLinks?.forEach(link => {
-          link.style.fontSize = `${Math.max(0.75, 1 - shrinkProgress * 0.25)}rem`;
+          link.style.fontSize = `${Math.max(0.85, 1 - shrinkProgress * 0.15)}rem`;
         });
         
         header.classList.add("scrolled");
@@ -217,9 +223,12 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
         logo.style.transform = "scale(1)";
         nav.style.borderBottom = "none";
         
-        // Reset to normal opacity (60%)
-        const normalOpacity = 0.6;
-        nav.style.backgroundColor = `rgba(220, 252, 231, ${normalOpacity})`;
+        // Reset to normal opacity (85%) with theme-based colors
+        const normalOpacity = 0.85;
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        const lightBgColor = `rgba(220, 252, 231, ${normalOpacity})`; // green-100
+        const darkBgColor = `rgba(20, 83, 45, ${normalOpacity})`; // green-900
+        nav.style.backgroundColor = isDarkMode ? darkBgColor : lightBgColor;
         
         nav.style.boxShadow = "none";
         
@@ -243,6 +252,19 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
         }, 10);
       }
     });
+
+    // Function to update navbar background based on theme
+    function updateNavbarBackground() {
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      const currentOpacity = nav.style.backgroundColor.includes('0.95') ? 0.95 : 
+                            nav.style.backgroundColor.includes('0.8') ? 0.8 : 0.85;
+      const lightBgColor = `rgba(220, 252, 231, ${currentOpacity})`; // green-100
+      const darkBgColor = `rgba(20, 83, 45, ${currentOpacity})`; // green-900
+      nav.style.backgroundColor = isDarkMode ? darkBgColor : lightBgColor;
+    }
+
+    // Listen for theme changes
+    window.addEventListener("on-hs-appearance-change", updateNavbarBackground);
   });
 
   // Handle navbar visibility on page transitions
@@ -276,6 +298,16 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
     
     // Set proper body padding after page transition
     setTimeout(setBodyPadding, 100);
+    
+    // Update navbar background after page transition
+    const header = document.getElementById("main-header") as HTMLElement;
+    const nav = header?.querySelector("nav") as HTMLElement;
+    if (nav) {
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      const lightBgColor = `rgba(220, 252, 231, 0.85)`; // green-100
+      const darkBgColor = `rgba(20, 83, 45, 0.85)`; // green-900
+      nav.style.backgroundColor = isDarkMode ? darkBgColor : lightBgColor;
+    }
   });
 </script>
 
