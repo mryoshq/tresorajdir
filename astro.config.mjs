@@ -34,8 +34,17 @@ export default defineConfig({
       },
     }),
     compressor({
-      gzip: false,
+      gzip: true,
       brotli: true,
+      zstd: false, // Disable zstd to avoid Node.js version warnings
+      gzipOptions: {
+        level: 9,
+        memLevel: 9
+      },
+      brotliOptions: {
+        level: 11,
+        memLevel: 11
+      }
     }),
     mdx(),
   ],
@@ -44,5 +53,24 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+          pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
+        },
+        mangle: true,
+        format: {
+          comments: false
+        }
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: undefined
+        }
+      }
+    }
   },
 });
