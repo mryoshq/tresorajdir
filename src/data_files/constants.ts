@@ -35,12 +35,12 @@ export const SEO = {
 };
 
 export const OG = {
-  locale: "en_US",
+  locale: "fr_FR",
   type: "website",
   url: SITE.url,
-  title: `${SITE.title}: Orchard & Apple Farm`,
+  title: `${SITE.title}: Verger et Ferme de Pommes`,
   description:
-    "Explore Trésor d'Ajdir, an authentic orchard and apple farm where tradition meets sustainability. Enjoy premium apples, discover our farming practices, and experience the richness of nature.",
+    "Explorez Trésor d'Ajdir, un véritable verger et ferme de pommes où la tradition rencontre la durabilité. Découvrez les pommes premium, nos pratiques agricoles, et la richesse de la nature.",
   image: ogImageSrc,
 };
 
