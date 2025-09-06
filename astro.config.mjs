@@ -11,6 +11,10 @@ export default defineConfig({
   site: "https://tresorajdir.com",
   image: {
   },
+  security: {
+    checkOrigin: true,
+    allowedHosts: ["fonts.googleapis.com", "fonts.gstatic.com"],
+  },
    i18n: {
      defaultLocale: "fr",
      locales: ["fr", "en"],

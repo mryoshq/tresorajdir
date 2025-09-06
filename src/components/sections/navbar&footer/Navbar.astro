@@ -116,9 +116,43 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
   </nav>
 </header>
 
-<!-- Script to shrink navbar on scroll -->
+<!-- Script to handle navbar visibility and shrink on scroll -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
+    // Calculate and set proper body padding based on navbar height
+    function setBodyPadding() {
+      const header = document.getElementById("main-header") as HTMLElement;
+      if (header) {
+        const headerHeight = header.offsetHeight;
+        document.body.style.paddingTop = `${headerHeight}px`; // Exact navbar height, no extra spacing
+      }
+    }
+    
+    // Set initial padding
+    setBodyPadding();
+    
+    // Recalculate on window resize
+    window.addEventListener('resize', setBodyPadding);
+    
+    // Check if we're on home page
+    const isHomePage = window.location.pathname === '/' || window.location.pathname === '/en';
+    
+    // If not on home page, show navbar immediately
+    if (!isHomePage) {
+      const header = document.getElementById("main-header") as HTMLElement;
+      if (header) {
+        header.style.opacity = '1';
+        header.style.transform = 'translateY(0)';
+      }
+      
+      // Show all navbar elements immediately
+      const navbarElements = document.querySelectorAll('.hero-navbar, .hero-logo, .hero-logo-mobile, .hero-nav-links, .hero-controls, .hero-controls-mobile');
+      navbarElements.forEach(element => {
+        (element as HTMLElement).style.opacity = '1';
+        (element as HTMLElement).style.transform = 'none';
+      });
+    }
+    
     const header = document.getElementById("main-header") as HTMLElement;
     const nav = header?.querySelector("nav") as HTMLElement;
     const logo = header?.querySelector("a[aria-label='Brand']") as HTMLElement;
@@ -151,8 +185,8 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
         nav.style.borderBottom = shrinkProgress > 0.3 ? '1px solid #d97706' : 'none';
         
         // Dynamic opacity: 60% normal, 30% when shrunk
-        const normalOpacity = 0.6; // Normal state opacity
-        const shrunkOpacity = 0.3; // Shrunk state opacity
+        const normalOpacity = 0.8; // Normal state opacity
+        const shrunkOpacity = 0.6; // Shrunk state opacity
         const currentOpacity = normalOpacity - (shrinkProgress * (normalOpacity - shrunkOpacity));
         
         // Use same base green-100 color with dynamic opacity
@@ -167,6 +201,15 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
         });
         
         header.classList.add("scrolled");
+        
+        // Recalculate body padding after navbar shrinks
+        setTimeout(setBodyPadding, 10);
+        
+        // Trigger MainSection adjustment if it exists
+        setTimeout(() => {
+          const event = new CustomEvent('navbarHeightChanged');
+          window.dispatchEvent(event);
+        }, 10);
       } else {
         // Reset to original size
         nav.style.paddingTop = "0.75rem";
@@ -185,8 +228,54 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
         });
         
         header.classList.remove("scrolled");
+        
+        // Ensure header is properly positioned
+        header.style.transform = "translateY(0)";
+        header.style.opacity = "1";
+        
+        // Recalculate body padding after navbar resets
+        setTimeout(setBodyPadding, 10);
+        
+        // Trigger MainSection adjustment if it exists
+        setTimeout(() => {
+          const event = new CustomEvent('navbarHeightChanged');
+          window.dispatchEvent(event);
+        }, 10);
       }
     });
+  });
+
+  // Handle navbar visibility on page transitions
+  document.addEventListener('astro:after-swap', function () {
+    // Recalculate body padding after page transition
+    function setBodyPadding() {
+      const header = document.getElementById("main-header") as HTMLElement;
+      if (header) {
+        const headerHeight = header.offsetHeight;
+        document.body.style.paddingTop = `${headerHeight}px`; // Exact navbar height, no extra spacing
+      }
+    }
+    
+    const isHomePage = window.location.pathname === '/' || window.location.pathname === '/en';
+    
+    // If not on home page, show navbar immediately
+    if (!isHomePage) {
+      const header = document.getElementById("main-header") as HTMLElement;
+      if (header) {
+        header.style.opacity = '1';
+        header.style.transform = 'translateY(0)';
+      }
+      
+      // Show all navbar elements immediately
+      const navbarElements = document.querySelectorAll('.hero-navbar, .hero-logo, .hero-logo-mobile, .hero-nav-links, .hero-controls, .hero-controls-mobile');
+      navbarElements.forEach(element => {
+        (element as HTMLElement).style.opacity = '1';
+        (element as HTMLElement).style.transform = 'none';
+      });
+    }
+    
+    // Set proper body padding after page transition
+    setTimeout(setBodyPadding, 100);
   });
 </script>
 
@@ -323,9 +412,18 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
     opacity: 1;
   }
 
-  /* Add padding to body to account for fixed header */
+  /* Add padding to body to account for fixed header - will be overridden by JS */
   body {
-    padding-top: 4rem;
+    padding-top: 0; /* Let JavaScript handle the exact padding */
+  }
+  
+  /* Ensure navbar doesn't overlap content */
+  #main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
   }
 
   /* Smooth transitions for shrink effect */
@@ -341,7 +439,7 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
     transition: font-size 0.3s ease;
   }
 
-  /* Initial animation states for header elements */
+  /* Initial animation states for header elements - only on home page */
   .hero-header {
     opacity: 0;
     transform: translateY(-100%);

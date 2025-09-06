@@ -63,16 +63,20 @@ const alternateLanguageLinks: string = Object.entries(languages)
       cleanPath = '/' + cleanPath;
     }
     
-    // Create the href for this language
+    // Create the href for this language - ensure no double slashes
     const href = prefix ? `/${prefix}${cleanPath}` : cleanPath;
-    const fullHref = `${Astro.site}${href}`;
+    // Remove any double slashes that might occur
+    const cleanHref = href.replace(/\/+/g, '/');
+    const fullHref = `${Astro.site}${cleanHref}`;
     
     return `<link rel="alternate" hreflang="${lang}" href="${fullHref}" />`;
   })
   .join("\n");
 
 // Add x-default hreflang pointing to the default language (French)
-const defaultHref = `${Astro.site}${Astro.url.pathname.replace(/^\/en/, '')}`;
+const defaultPath = Astro.url.pathname.replace(/^\/en/, '');
+const cleanDefaultPath = defaultPath.replace(/\/+/g, '/');
+const defaultHref = `${Astro.site}${cleanDefaultPath}`;
 const xDefaultLink = `<link rel="alternate" hreflang="x-default" href="${defaultHref}" />`;
 
 // Generate and optimize the favicon images

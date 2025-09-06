@@ -17,7 +17,7 @@ interface Props {
 
 <!-- Root section of the component -->
 <section
-  class={`${backgroundImage ? 'mt-0 -mx-4 sm:-mx-6 lg:-mx-8' : 'mt-10'} py-10 sm:py-16 lg:py-14 relative`}
+  class={`${backgroundImage ? 'sm:-mx-6 lg:-mx-8' : 'mt-10'} py-10 sm:py-16 lg:py-14 relative`}
   style={backgroundImage ? `background-image: url(${backgroundImage.src || backgroundImage}); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100vw; margin-left: calc(-50vw + 50%);` : ''}
   id="main-section"
 >
@@ -62,6 +62,20 @@ interface Props {
   // Register ScrollTrigger plugin
   gsap.registerPlugin(ScrollTrigger);
   
+  // Function to adjust section position for navbar
+  function adjustSectionPosition() {
+    const section = document.getElementById('main-section');
+    const header = document.getElementById('main-header');
+    
+    if (section && header) {
+      const headerHeight = header.offsetHeight;
+      // Remove any margin-top
+      section.style.marginTop = '0px';
+      // Add minimal padding to the content (just enough for visual spacing)
+      section.style.paddingTop = `${headerHeight + 5}px`;
+    }
+  }
+  
   // Function to initialize the main section animations
   function initMainSectionAnimations() {
     
@@ -74,6 +88,9 @@ interface Props {
     if (!section) {
       return;
     }
+    
+    // Adjust section position for navbar
+    adjustSectionPosition();
     
     // Set initial states
     if (overlay) {
@@ -157,5 +174,15 @@ interface Props {
   document.addEventListener('astro:before-swap', () => {
     // Cleanup before page swap
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  });
+  
+  // Adjust section position on window resize
+  window.addEventListener('resize', () => {
+    setTimeout(adjustSectionPosition, 100);
+  });
+  
+  // Adjust section position when navbar height changes
+  window.addEventListener('navbarHeightChanged', () => {
+    setTimeout(adjustSectionPosition, 10);
   });
 </script>
