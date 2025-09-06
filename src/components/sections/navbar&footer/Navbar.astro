@@ -19,11 +19,11 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
 <!-- Main header component with shrink-on-scroll functionality -->
 <header
   id="main-header"
-  class="fixed inset-x-0 top-0 z-50 w-full transition-all duration-300"
+  class="fixed inset-x-0 top-0 z-50 w-full transition-all duration-300 hero-header"
 >
   <!-- Navigation container -->
   <nav
-    class="relative w-full px-4 py-3 backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-2 lg:px-8"
+    class="relative w-full px-4 py-3 backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-2 lg:px-8 hero-navbar"
     aria-label="Global"
   >
     <!-- Desktop Layout: Centered logo with links grouped around it -->
@@ -34,7 +34,7 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
       <!-- Centered Logo and Navigation Links Group -->
       <div class="flex items-center gap-x-4 lg:gap-x-6">
         <!-- Left Navigation Links -->
-        <div class="flex items-center gap-x-3 lg:gap-x-4">
+        <div class="flex items-center gap-x-3 lg:gap-x-4 hero-nav-links">
           {leftLinks.map(link => (
             <NavLink url={link.url} name={link.name} />
           ))}
@@ -43,7 +43,7 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
         <!-- Centered Logo -->
         <div class="flex justify-center">
           <a
-            class="w-10 flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden transition-transform duration-300"
+            class="w-10 flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden transition-transform duration-300 hero-logo"
             href={homeUrl}
             aria-label="Brand"
           >
@@ -52,7 +52,7 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
         </div>
 
         <!-- Right Navigation Links -->
-        <div class="flex items-center gap-x-3 lg:gap-x-4">
+        <div class="flex items-center gap-x-3 lg:gap-x-4 hero-nav-links">
           {rightLinks.map(link => (
             <NavLink url={link.url} name={link.name} />
           ))}
@@ -60,7 +60,7 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
       </div>
 
       <!-- Right-Side Controls -->
-      <div class="flex-1 flex justify-end items-center gap-x-2">
+      <div class="flex-1 flex justify-end items-center gap-x-2 hero-controls">
         <LanguagePicker />
         <ThemeIcon />
       </div>
@@ -71,7 +71,7 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
       <!-- Centered Logo for Mobile - truly centered on screen -->
       <div class="flex justify-center w-full">
         <a
-          class="w-10 flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden transition-transform duration-300"
+          class="w-10 flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden transition-transform duration-300 hero-logo-mobile"
           href={homeUrl}
           aria-label="Brand"
         >
@@ -80,7 +80,7 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
       </div>
 
       <!-- Mobile Right-Side Controls -->
-      <div class="flex items-center gap-x-2 absolute right-0 z-10">
+      <div class="flex items-center gap-x-2 absolute right-0 z-10 hero-controls-mobile">
         <LanguagePicker />
         <ThemeIcon />
         <!-- Hamburger Menu Button -->
@@ -339,5 +339,43 @@ const rightLinks = strings.navBarLinks.slice(3, 6);
 
   .nav-link {
     transition: font-size 0.3s ease;
+  }
+
+  /* Initial animation states for header elements */
+  .hero-header {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  
+  .hero-navbar {
+    opacity: 0;
+  }
+  
+  .hero-logo,
+  .hero-logo-mobile {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  
+  .hero-nav-links {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  .hero-controls,
+  .hero-controls-mobile {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* Ensure smooth transitions */
+  .hero-header,
+  .hero-navbar,
+  .hero-logo,
+  .hero-logo-mobile,
+  .hero-nav-links,
+  .hero-controls,
+  .hero-controls-mobile {
+    will-change: opacity, transform;
   }
 </style>

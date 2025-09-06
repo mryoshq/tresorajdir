@@ -34,15 +34,17 @@ const displayedPartners = partners;
     <div class="rail">
       {displayedPartners.map((partner: Partner) => (
         <div class="client-item">
-          <a href={partner.href} target="_blank" rel="noopener noreferrer">
-            <Image 
-              src={partner.image} 
-              alt={partner.name}
-              width={120}
-              height={80}
-              class="h-20 w-auto py-1 sm:h-24 md:h-28 lg:h-32 lg:py-2 object-contain transition-all duration-300"
-            />
-          </a>
+          <div class="client-container">
+            <a href={partner.href} target="_blank" rel="noopener noreferrer">
+              <Image 
+                src={partner.image} 
+                alt={partner.name}
+                width={120}
+                height={80}
+                class="h-20 w-auto py-1 sm:h-24 md:h-28 lg:h-32 lg:py-2 object-contain transition-all duration-300"
+              />
+            </a>
+          </div>
         </div>
       ))}
     </div>
@@ -63,7 +65,6 @@ const displayedPartners = partners;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
     width: fit-content;
     padding: 0 2rem; /* Add horizontal padding to prevent edge overlap */
   }
@@ -74,11 +75,27 @@ const displayedPartners = partners;
     min-width: fit-content;
     position: relative;
     z-index: 1;
+    margin: 0 1rem; /* Add margin to each item for spacing */
+  }
+  
+  .clients-marquee .client-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 140px; /* Fixed width to prevent overlapping */
+    height: 100px; /* Fixed height for consistency */
+    padding: 1rem;
+    box-sizing: border-box;
   }
   
   .clients-marquee .client-item a {
     display: block;
     transition: opacity 0.3s ease;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .clients-marquee .client-item a:hover {
@@ -87,14 +104,24 @@ const displayedPartners = partners;
   
   /* Responsive adjustments */
   @media (max-width: 768px) {
-    .clients-marquee .rail {
-      gap: 1.5rem;
+    .clients-marquee .client-container {
+      width: 120px;
+      height: 80px;
+      padding: 0.75rem;
+    }
+    .clients-marquee .client-item {
+      margin: 0 0.75rem;
     }
   }
   
   @media (max-width: 640px) {
-    .clients-marquee .rail {
-      gap: 1rem;
+    .clients-marquee .client-container {
+      width: 100px;
+      height: 70px;
+      padding: 0.5rem;
+    }
+    .clients-marquee .client-item {
+      margin: 0 0.5rem;
     }
   }
 </style>
@@ -177,8 +204,8 @@ const displayedPartners = partners;
     if (clientItems.length > 0) {
       const tl = horizontalLoop(clientItems, {
         repeat: -1,
-        paddingRight: 48, // Increased padding to prevent overlapping
-        speed: 0.2, // Even slower speed for smoother transitions
+        paddingRight: 60, // Increased padding to account for fixed container width
+        speed: 0.15, // Slower speed for better control with fixed containers
         snap: false // Disable snapping to prevent position jumps
       });
       

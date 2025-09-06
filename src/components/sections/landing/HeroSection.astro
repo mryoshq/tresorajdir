@@ -224,13 +224,44 @@ interface Props {
         duration: 0.8,
         ease: "power2.out"
       }, "-=0.4")
-      // 3. Header drops down (buttons)
+      // 3. Buttons appear
       .to('.hero-buttons', {
         opacity: 1,
         y: 0,
         duration: 0.6,
         ease: "power2.out"
-      }, "-=0.2");
+      }, "-=0.2")
+      // 4. Header appears last - slides down from top (faster)
+      .to('.hero-header', {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out"
+      }, "-=0.1")
+      // 5. Navbar elements animate in (faster)
+      .to('.hero-navbar', {
+        opacity: 1,
+        duration: 0.3,
+        ease: "power2.out"
+      }, "-=0.2")
+      .to('.hero-logo, .hero-logo-mobile', {
+        opacity: 1,
+        scale: 1,
+        duration: 0.3,
+        ease: "back.out(1.4)"
+      }, "-=0.1")
+      .to('.hero-nav-links', {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+        ease: "power2.out"
+      }, "-=0.1")
+      .to('.hero-controls, .hero-controls-mobile', {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+        ease: "power2.out"
+      }, "-=0.05");
     }
 
     // Wait for DOM to be ready and then initialize
