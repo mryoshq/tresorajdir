@@ -23,19 +23,18 @@ const partners = [
   { image: onssaLogo, name: "ONSSA", href: "#" },
 ];
 
-// Use original partners array without duplication
+// Show all 6 partners without duplicates
 const displayedPartners = partners;
 ---
 
 <section
   class="mx-auto max-w-[65rem] px-4 sm:px-6 lg:px-8 2xl:max-w-full border-y-4 border-green-700/20 dark:border-green-200/40 overflow-x-hidden"
 >
-
-  <div class="flex items-center justify-center">
-    <div class="flex items-center justify-center gap-8 md:gap-12 lg:gap-16">
+  <div class="clients-marquee">
+    <div class="rail">
       {displayedPartners.map((partner: Partner) => (
-        <a href={partner.href} target="_blank" rel="noopener noreferrer">
-          <div class="flex items-center justify-center">
+        <div class="client-item">
+          <a href={partner.href} target="_blank" rel="noopener noreferrer">
             <Image 
               src={partner.image} 
               alt={partner.name}
@@ -43,10 +42,158 @@ const displayedPartners = partners;
               height={80}
               class="h-20 w-auto py-1 sm:h-24 md:h-28 lg:h-32 lg:py-2 object-contain transition-all duration-300"
             />
-          </div>
-        </a>
+          </a>
+        </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .clients-marquee {
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+  
+  .clients-marquee .rail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: fit-content;
+  }
+  
+  .clients-marquee .client-item {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  .clients-marquee .client-item a {
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+  
+  .clients-marquee .client-item a:hover {
+    opacity: 0.8;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .clients-marquee .rail {
+      gap: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .clients-marquee .rail {
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { Observer } from 'gsap/Observer';
+  
+  gsap.registerPlugin(Observer);
+  
+  // Horizontal Loop helper function
+  function horizontalLoop(items: any, config: any) {
+    items = gsap.utils.toArray(items);
+    config = config || {};
+    let tl = gsap.timeline({repeat: config.repeat, paused: config.paused, defaults: {ease: "none"}, onReverseComplete: () => { tl.totalTime(tl.rawTime() + tl.duration() * 100); }}),
+      length = items.length,
+      startX = items[0].offsetLeft,
+      times: number[] = [],
+      widths: number[] = [],
+      xPercents: number[] = [],
+      curIndex = 0,
+      pixelsPerSecond = (config.speed || 1) * 100,
+      snap = config.snap === false ? (v: any) => v : gsap.utils.snap(config.snap || 1),
+      totalWidth: number, curX: number, distanceToStart: number, distanceToLoop: number, item: any, i: number;
+    
+    gsap.set(items, {
+      xPercent: (i: number, el: any) => {
+        let w = widths[i] = parseFloat(String(gsap.getProperty(el, "width", "px")));
+        xPercents[i] = snap(parseFloat(String(gsap.getProperty(el, "x", "px"))) / w * 100 + Number(gsap.getProperty(el, "xPercent")));
+        return xPercents[i];
+      }
+    });
+    gsap.set(items, {x: 0});
+    totalWidth = items[length-1].offsetLeft + xPercents[length-1] / 100 * widths[length-1] - startX + items[length-1].offsetWidth * Number(gsap.getProperty(items[length-1], "scaleX")) + (parseFloat(config.paddingRight) || 0);
+    
+    for (i = 0; i < length; i++) {
+      item = items[i];
+      curX = xPercents[i] / 100 * widths[i];
+      distanceToStart = item.offsetLeft + curX - startX;
+      distanceToLoop = distanceToStart + widths[i] * Number(gsap.getProperty(item, "scaleX"));
+      tl.to(item, {xPercent: snap((curX - distanceToLoop) / widths[i] * 100), duration: distanceToLoop / pixelsPerSecond}, 0)
+        .fromTo(item, {xPercent: snap((curX - distanceToLoop + totalWidth) / widths[i] * 100)}, {xPercent: xPercents[i], duration: (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond, immediateRender: false}, distanceToLoop / pixelsPerSecond)
+        .add("label" + i, distanceToStart / pixelsPerSecond);
+      times[i] = distanceToStart / pixelsPerSecond;
+    }
+    
+    function toIndex(index: number, vars: any) {
+      vars = vars || {};
+      (Math.abs(index - curIndex) > length / 2) && (index += index > curIndex ? -length : length);
+      let newIndex = gsap.utils.wrap(0, length, index),
+        time = times[newIndex];
+      if (time > tl.time() !== index > curIndex) {
+        vars.modifiers = {time: gsap.utils.wrap(0, tl.duration())};
+        time += tl.duration() * (index > curIndex ? 1 : -1);
+      }
+      curIndex = newIndex;
+      vars.overwrite = true;
+      return tl.tweenTo(time, vars);
+    }
+    
+    tl.next = (vars: any) => toIndex(curIndex+1, vars);
+    tl.previous = (vars: any) => toIndex(curIndex-1, vars);
+    tl.current = () => curIndex;
+    tl.toIndex = (index: number, vars: any) => toIndex(index, vars);
+    tl.times = times;
+    tl.progress(1, true).progress(0, true);
+    if (config.reversed) {
+      if (tl.vars.onReverseComplete) {
+        tl.vars.onReverseComplete();
+      }
+      tl.reverse();
+    }
+    return tl;
+  }
+  
+  // Initialize marquee animation
+  document.addEventListener('DOMContentLoaded', () => {
+    const clientItems = gsap.utils.toArray('.client-item');
+    
+    if (clientItems.length > 0) {
+      const tl = horizontalLoop(clientItems, {
+        repeat: -1,
+        paddingRight: 32, // 2rem in pixels to match CSS gap
+        speed: 0.3 // Slower speed for better visibility of all 6 logos
+      });
+      
+      // Observer for scroll direction changes
+      Observer.create({
+        onChangeY(self) {
+          let factor = 2.5;
+          if (self.deltaY < 0) {
+            factor *= -1;
+          } 
+          gsap.timeline({
+            defaults: {
+              ease: "none",
+            }
+          })
+            .to(tl, { timeScale: factor * 2.5, duration: 0.2, overwrite: true })
+            .to(tl, { timeScale: factor / 2.5, duration: 1 }, "+=0.3");
+        }
+      });
+    }
+  });
+</script>
 
