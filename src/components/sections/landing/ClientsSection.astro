@@ -65,11 +65,15 @@ const displayedPartners = partners;
     justify-content: center;
     gap: 2rem;
     width: fit-content;
+    padding: 0 2rem; /* Add horizontal padding to prevent edge overlap */
   }
   
   .clients-marquee .client-item {
     white-space: nowrap;
     flex-shrink: 0;
+    min-width: fit-content;
+    position: relative;
+    z-index: 1;
   }
   
   .clients-marquee .client-item a {
@@ -173,24 +177,25 @@ const displayedPartners = partners;
     if (clientItems.length > 0) {
       const tl = horizontalLoop(clientItems, {
         repeat: -1,
-        paddingRight: 32, // 2rem in pixels to match CSS gap
-        speed: 0.3 // Slower speed for better visibility of all 6 logos
+        paddingRight: 48, // Increased padding to prevent overlapping
+        speed: 0.2, // Even slower speed for smoother transitions
+        snap: false // Disable snapping to prevent position jumps
       });
       
       // Observer for scroll direction changes
       Observer.create({
         onChangeY(self) {
-          let factor = 2.5;
+          let factor = 1.8; // Reduced factor for gentler response
           if (self.deltaY < 0) {
             factor *= -1;
           } 
           gsap.timeline({
             defaults: {
-              ease: "none",
+              ease: "power2.out", // Smoother easing
             }
           })
-            .to(tl, { timeScale: factor * 2.5, duration: 0.2, overwrite: true })
-            .to(tl, { timeScale: factor / 2.5, duration: 1 }, "+=0.3");
+            .to(tl, { timeScale: factor * 1.5, duration: 0.3, overwrite: true })
+            .to(tl, { timeScale: factor * 0.8, duration: 1.2 }, "+=0.2");
         }
       });
     }
